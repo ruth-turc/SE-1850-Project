@@ -5,8 +5,8 @@
 /* PROTOTYPES */
 int calculatePlayerBonus(const char inventory[]);
 int playerCombatNumber(int playerBonus);
-int monsterCombatNumber(int floor level);
-int goldPickUp(int floor level);
+int monsterCombatNumber(int floorLevel);
+int goldPickUp(int floorLevel);
 
 /* global variables */
 int playerHP;
@@ -14,16 +14,17 @@ int playerHP;
 /* Maps!
         Key: 'u' = stairs up, 'd' = stairs down,'g' = gold, 
             'm' = monster, 'i' = item, 'v' = vender/merchant
-
-    We might want to eventually move these to their own file 
-    and use a pointer?
 */
-char floor1[][] = {' ','m','g'}
-                  {' ',' ','d'};
+char floor1[2][3] = {{' ','m','g'},
+                  {' ',' ','d'}};
 
-char floor2[][] = {' ','i','d'}
-                  {'u','m',' '}
-                  {' ',' ','g'};
+char floor2[3][3] = {{' ','i','d'},
+                  {'u','m',' '},
+                  {' ',' ','g'}};
+
+char floor3[3][2] = {{'g','v'},
+                     {'g','u'},
+                     {'d','g'}};
 int main(){
     char inventory[10];
     int playerHP = 100;
