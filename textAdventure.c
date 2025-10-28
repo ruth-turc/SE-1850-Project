@@ -8,15 +8,18 @@ int playerCombatNumber(int playerBonus);
 int monsterCombatNumber(int floor level);
 int goldPickUp(int floor level);
 
-/* global variables */
-int playerHP;
+/* structure to represent player */
+struct character {
+    int health;
+    char[50] name;
+    char inventory[10];
+};
 
 /* Maps!
         Key: 'u' = stairs up, 'd' = stairs down,'g' = gold, 
             'm' = monster, 'i' = item, 'v' = vender/merchant
-
-    We might want to eventually move these to their own file 
-    and use a pointer?
+    We might eventually want to make a function that will return
+    the maps instead of declaring them here?
 */
 char floor1[][] = {' ','m','g'}
                   {' ',' ','d'};
@@ -24,9 +27,26 @@ char floor1[][] = {' ','m','g'}
 char floor2[][] = {' ','i','d'}
                   {'u','m',' '}
                   {' ',' ','g'};
+
 int main(){
-    char inventory[10];
-    int playerHP = 100;
+    //create character structure called player and assign health
+    struct character player;
+    player.health = 100;
+    char[50] choice;
+    
+    //ask player for name
+    printf("~~~~ Welcome Adventurer! ~~~~\n");
+    printf("Please Enter your name ---> ");
+    scanf("%s",&player.name);
+
+    printf("%s, are you ready to start exploring?\n ",player.name);
+    printf("[yes] or [no] ---> ");
+    scanf("%s", &choice);
+
+    if (strcmp(choice,"no" == 0)){
+        printf("Well, that's too bad...you don't have a choice.");
+    }
+
     return 0;
 }
 
