@@ -5,13 +5,13 @@
 /* PROTOTYPES */
 int calculatePlayerBonus(const char inventory[]);
 int playerCombatNumber(int playerBonus);
-int monsterCombatNumber(int floor level);
-int goldPickUp(int floor level);
+int monsterCombatNumber(int floorLevel);
+int goldPickUp(int floorLevel);
 
 /* structure to represent player */
 struct character {
     int health;
-    char[50] name;
+    char name[50];
     char inventory[10];
 };
 
@@ -21,18 +21,18 @@ struct character {
     We might eventually want to make a function that will return
     the maps instead of declaring them here?
 */
-char floor1[][] = {' ','m','g'}
-                  {' ',' ','d'};
+char floor1[][3] = {{' ','m','g'},
+                  {' ',' ','d'}};
 
-char floor2[][] = {' ','i','d'}
-                  {'u','m',' '}
-                  {' ',' ','g'};
+char floor2[][3] = {{' ','i','d'},
+                  {'u','m',' '},
+                  {' ',' ','g'}};
 
 int main(){
     //create character structure called player and assign health
     struct character player;
     player.health = 100;
-    char[50] choice;
+    char choice[50];
     
     //ask player for name
     printf("~~~~ Welcome Adventurer! ~~~~\n");
