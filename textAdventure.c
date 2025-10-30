@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 
 /* PROTOTYPES */
@@ -43,10 +44,10 @@ int main(){
     printf("[yes] or [no] ---> ");
     scanf("%s", &choice);
 
-    if (strcmp(choice,"no" == 0)){
+    if ((strcmp(choice,"no")) == 0){
         printf("Well, that's too bad...you don't have a choice.");
     }
-
+    
     return 0;
 }
 
