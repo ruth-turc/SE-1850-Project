@@ -4,6 +4,9 @@
 #include <time.h>
 
 /* PROTOTYPES */
+void printDirections(int row, int col, int floorLevel);
+int isValidDirection(int row, int col);
+
 int calculatePlayerBonus(const char inventory[]);
 int playerCombatNumber(int playerBonus);
 int monsterCombatNumber(int floorLevel);
@@ -14,6 +17,8 @@ struct character {
     int health;
     char name[50];
     char inventory[10];
+    int row;
+    int col;
 };
 
 /* Maps!
@@ -22,10 +27,10 @@ struct character {
     We might eventually want to make a function that will return
     the maps instead of declaring them here?
 */
-char floor1[][3] = {{' ','m','g'},
+char floor1[2][3] = {{' ','m','g'},
                   {' ',' ','d'}};
 
-char floor2[][3] = {{' ','i','d'},
+char floor2[3][3] = {{' ','i','d'},
                   {'u','m',' '},
                   {' ',' ','g'}};
 
@@ -33,21 +38,60 @@ int main(){
     //create character structure called player and assign health
     struct character player;
     player.health = 100;
+
+    //initialize player location on floor1
+    player.row = 0;
+    player.col = 0;
+
+    int floorLevel = 1;
     char choice[50];
     
-    //ask player for name
-    printf("~~~~ Welcome Adventurer! ~~~~\n");
-    printf("Please Enter your name ---> ");
-    scanf("%s",&player.name);
+    printf("You awaken in a dark cave...\n");
+    printDirections(player.row,player.col,floorLevel);
+    scanf("%s", choice);
 
-    printf("%s, are you ready to start exploring?\n ",player.name);
-    printf("[yes] or [no] ---> ");
-    scanf("%s", &choice);
-
-    if ((strcmp(choice,"no")) == 0){
-        printf("Well, that's too bad...you don't have a choice.");
+    while (1){
+        printDirections(player.row, player.col, floorLevel);
+        scanf("%s", choice);
     }
+
     
     return 0;
 }
 
+/* FUNCTIONS!!!*/
+
+void printDirections(int row, int col, int floorLevel){
+    //find the max row and column index for a specific floor level
+    int max_row, max_col;
+    switch (floorLevel){
+        case 1:
+            max_row = 2;
+            max_col = 1;
+            break;
+        case 2:
+            max_row = 2;
+            max_col = 2;
+            break;
+    };
+
+    //print possible directions
+    printf("what would you like to do?\n");
+    if (row != 0){
+        printf("[go north]");
+    }
+    if (col != max_row){
+        printf("[go east]");
+    }
+    if (row != max_col){
+        printf("[go south]");
+    }
+    if (col != 0){
+        printf("[go west]");
+    }
+}
+
+int isValidDirection(int row, int col){
+    printf("FIXME: write function");
+    return 1;
+}
