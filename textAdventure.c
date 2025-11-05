@@ -47,12 +47,15 @@ int main(){
     char choice[50];
     
     printf("You awaken in a dark cave...\n");
-    printDirections(player.row,player.col,floorLevel);
-    scanf("%s", choice);
 
     while (1){
         printDirections(player.row, player.col, floorLevel);
         scanf("%s", choice);
+        if (isValidDirection(player.row, player.col)){
+            //continue with the loop
+        } else {
+            printf("You run into a wall");
+        }
     }
 
     
