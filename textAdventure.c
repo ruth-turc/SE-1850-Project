@@ -83,16 +83,16 @@ void printDirections(int row, int col, int floorLevel){
     //print possible directions
     printf("what would you like to do?\n");
     if (row != 0){
-        printf("[go north]");
+        printf("go north [w]");
     }
     if (col != max_row){
-        printf("[go east]");
+        printf("go east [d]");
     }
     if (row != max_col){
-        printf("[go south]");
+        printf("go south [s]");
     }
     if (col != 0){
-        printf("[go west]");
+        printf("go west [a]");
     }
 }
 
