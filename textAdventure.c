@@ -12,6 +12,8 @@ int playerCombatNumber(int playerBonus);
 int monsterCombatNumber(int floorLevel);
 int goldPickUp(int floorLevel);
 
+//comment from Jane
+
 /* structure to represent player */
 struct character {
     int health;
