@@ -7,21 +7,21 @@
 void printDirections(int row, int col, int floorLevel);
 int isValidDirection(int row, int col);
 
-int calculatePlayerBonus(const char inventory[]);
-int playerCombatNumber(int playerBonus);
+int playerCombatNumber(character player);
 int monsterCombatNumber(int floorLevel);
 int goldPickUp(int floorLevel);
+
 
 //comment from Jane
 
 /* structure to represent player */
-struct character {
+typedef struct {
     int health;
-    char name[50];
-    char inventory[10];
+    int gold;
+    char[10] inventory;
     int row;
     int col;
-};
+} character;
 
 /* Maps!
         Key: 'u' = stairs up, 'd' = stairs down,'g' = gold, 
@@ -38,7 +38,7 @@ char floor2[3][3] = {{' ','i','d'},
 
 int main(){
     //create character structure called player and assign health
-    struct character player;
+    character player;
     player.health = 100;
 
     //initialize player location on floor1
@@ -50,14 +50,50 @@ int main(){
     
     printf("You awaken in a dark cave...\n");
 
-    while (1){
+    while (player.health > 0){
         printDirections(player.row, player.col, floorLevel);
         scanf("%s", choice);
+        //add move character
         if (isValidDirection(player.row, player.col)){
-            //continue with the loop
-        } else {
             printf("You run into a wall");
-        }
+            continue;
+        } 
+
+        /* I think we need to figure out something else for the maps...like make their own function???*/
+        switch (floor[player.row][player.column]){
+            case 'u':
+                printf("You find a set of stairs going up.\n");
+                printf("You've been here before.\n");
+                break;
+            case 'd':
+                printf("You find a set of stairs going down.\n");
+                printf("Would you like to decsend?\n");
+                printf("[y]es or [n]o --> ");
+                scanf("%s", &choice);
+
+                if (/* yes*/){
+                    floorLevel++;
+                }
+                break;
+            case 'g':
+                printf("You found gold! Pick it up?\n");
+                printf("[y]es or [n]o --> ");
+                scanf("%s", &choice);
+
+                if (/* yes*/){
+                    goldPickUp(floorLevel);
+                }
+                break;
+            case 'm':
+                /* do we want a monster function that returns a different description
+                    of a monster based on floor level?? This function could also take
+                    care of combat.*/
+
+            case 'i':
+                /* make its own function?*/
+            case 'v':
+                /* same here? */
+        };
     }
 
     
@@ -83,16 +119,16 @@ void printDirections(int row, int col, int floorLevel){
     //print possible directions
     printf("what would you like to do?\n");
     if (row != 0){
-        printf("go north [w]");
+        printf("go north[w] ");
     }
     if (col != max_row){
-        printf("go east [d]");
+        printf("go east[d] ");
     }
     if (row != max_col){
-        printf("go south [s]");
+        printf("go south[s] ");
     }
     if (col != 0){
-        printf("go west [a]");
+        printf("go west[a]");
     }
 }
 
