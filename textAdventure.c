@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <ctype.h>
 #include <time.h>
 
 
@@ -61,13 +61,13 @@ int main(){
     monster badGuy;
 
     int floorLevel = 1;
-    char choice[50];
+    char choice;
     
     printf("You awaken in a dark cave...\n");
 
     while (player.health > 0){
         printDirections(player.row, player.col, floorLevel);
-        scanf("%s", choice);
+        scanf("%c", choice);
         //add move character
         if (!isValidDirection(player.row, player.col)){
             printf("You run into a wall");
@@ -84,21 +84,25 @@ int main(){
                 printf("You find a set of stairs going down.\n");
                 printf("Would you like to decsend?\n");
                 printf("[y]es or [n]o --> ");
-                scanf("%s", &choice);
+                scanf("%c", &choice);
 
-                if (tolower(choice) == 'y'){
+                if (choice == 'y'){
                     floorLevel++;
                 }
                 break;
             case 'g':
                 printf("You found gold! Pick it up?\n");
                 printf("[y]es or [n]o --> ");
-                scanf("%s", &choice);
+                scanf("%c", &choice);
 
-                if (toLower(choice) == 'y'){
+                if (choice == 'y'){
                     player.gold += goldPickUp(floorLevel);
                     printf("+%d gold\n",goldPickUp(floorLevel));
+<<<<<<< HEAD
                 } else if(tolower(choice) == 'n'){
+=======
+                } else (choice == 'n'){
+>>>>>>> 4f2d88b937de0ddb621febcccc98f6bb777d1d15
                     printf("You leave the gold.\n");
                 }
                 break;
@@ -107,10 +111,10 @@ int main(){
                 printf("[f]ight or [r]un?");
                 scanf("%c", choice);
 
-                if (tolower(choice)=='f'){
+                if (choice =='f'){
                     generateMonster(badGuy, floorLevel);
                     printCombat(badGuy, player);
-                } else if (tolower(choice)=='r'){
+                } else if (choice =='r'){
                     printf("coward.\n");
                 }
                 break;
