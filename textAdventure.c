@@ -88,7 +88,10 @@ int main(){
                 scanf("%c", &choice);
 
                 if (toLower(choice) == 'y'){
-                    goldPickUp(floorLevel);
+                    player.gold += goldPickUp(floorLevel);
+                    printf("+%d gold\n",goldPickUp(floorLevel));
+                } else (toLower(choice) == 'n'){
+                    printf("You leave the gold.\n");
                 }
                 break;
             case 'm':
@@ -142,4 +145,9 @@ void printDirections(int row, int col, int floorLevel){
 int isValidDirection(int row, int col){
     printf("FIXME: write function");
     return 1;
+}
+
+int goldPickUp(int floorLevel){
+    int gold = 2*floorLevel;
+    return gold;
 }
