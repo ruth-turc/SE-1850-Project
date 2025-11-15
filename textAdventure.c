@@ -46,15 +46,15 @@ int main(){
     player.col = 0;
 
     int floorLevel = 1;
-    char choice[50];
+    char choice;
     
     printf("You awaken in a dark cave...\n");
 
     while (player.health > 0){
         printDirections(player.row, player.col, floorLevel);
-        scanf("%s", choice);
+        scanf("%c", choice);
         //add move character
-        if (isValidDirection(player.row, player.col)){
+        if (!isValidDirection(player.row, player.col)){
             printf("You run into a wall");
             continue;
         } 
@@ -64,23 +64,30 @@ int main(){
             case 'u':
                 printf("You find a set of stairs going up.\n");
                 printf("You've been here before.\n");
+                printf("Would you like to acsend?\n");
+                printf("[y]es or [n]o --> ");
+                scanf("%c");
+                
+                if (toLower(choice) == 'y'){
+                    floorLevel--;
+                }
                 break;
             case 'd':
                 printf("You find a set of stairs going down.\n");
                 printf("Would you like to decsend?\n");
                 printf("[y]es or [n]o --> ");
-                scanf("%s", &choice);
+                scanf("%c", &choice);
 
-                if (/* yes*/){
+                if (toLower(choice) == 'y'){
                     floorLevel++;
                 }
                 break;
             case 'g':
                 printf("You found gold! Pick it up?\n");
                 printf("[y]es or [n]o --> ");
-                scanf("%s", &choice);
+                scanf("%c", &choice);
 
-                if (/* yes*/){
+                if (toLower(choice) == 'y'){
                     goldPickUp(floorLevel);
                 }
                 break;
