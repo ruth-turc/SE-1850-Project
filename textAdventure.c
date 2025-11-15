@@ -86,7 +86,7 @@ int main(){
                 printf("[y]es or [n]o --> ");
                 scanf("%s", &choice);
 
-                if (tolower(choice) == 'y'){
+                if (choice == 'y'){
                     floorLevel++;
                 }
                 break;
@@ -95,10 +95,10 @@ int main(){
                 printf("[y]es or [n]o --> ");
                 scanf("%s", &choice);
 
-                if (toLower(choice) == 'y'){
+                if (choice == 'y'){
                     player.gold += goldPickUp(floorLevel);
                     printf("+%d gold\n",goldPickUp(floorLevel));
-                } else (tolower(choice) == 'n'){
+                } else (choice == 'n'){
                     printf("You leave the gold.\n");
                 }
                 break;
@@ -107,10 +107,10 @@ int main(){
                 printf("[f]ight or [r]un?");
                 scanf("%c", choice);
 
-                if (tolower(choice)=='f'){
+                if (choice =='f'){
                     generateMonster(badGuy, floorLevel);
                     printCombat(badGuy, player);
-                } else if (tolower(choice)=='r'){
+                } else if (choice =='r'){
                     printf("coward.\n");
                 }
                 break;
