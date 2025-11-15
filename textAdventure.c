@@ -11,6 +11,7 @@ monster generateMonster(monster badGuy, int floorLevel);
 void printCombat(monster badGuy, character player);
 
 int goldPickUp(int floorLevel);
+character moveCharacter(char direction, char floorMap[][3], character player);
 
 
 //comment from Jane
