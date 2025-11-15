@@ -12,8 +12,6 @@ int monsterCombatNumber(int floorLevel);
 int goldPickUp(int floorLevel);
 
 
-//comment from Jane
-
 /* structure to represent player */
 typedef struct {
     int health;
@@ -21,6 +19,7 @@ typedef struct {
     char[10] inventory;
     int row;
     int col;
+    char event;
 } character;
 
 /* Maps!
@@ -46,13 +45,13 @@ int main(){
     player.col = 0;
 
     int floorLevel = 1;
-    char choice;
+    char choice[50];
     
     printf("You awaken in a dark cave...\n");
 
     while (player.health > 0){
         printDirections(player.row, player.col, floorLevel);
-        scanf("%c", choice);
+        scanf("%s", choice);
         //add move character
         if (!isValidDirection(player.row, player.col)){
             printf("You run into a wall");
@@ -60,34 +59,27 @@ int main(){
         } 
 
         /* I think we need to figure out something else for the maps...like make their own function???*/
-        switch (floor[player.row][player.column]){
+        switch (player.event){
             case 'u':
                 printf("You find a set of stairs going up.\n");
                 printf("You've been here before.\n");
-                printf("Would you like to acsend?\n");
-                printf("[y]es or [n]o --> ");
-                scanf("%c");
-                
-                if (toLower(choice) == 'y'){
-                    floorLevel--;
-                }
                 break;
             case 'd':
                 printf("You find a set of stairs going down.\n");
                 printf("Would you like to decsend?\n");
                 printf("[y]es or [n]o --> ");
-                scanf("%c", &choice);
+                scanf("%s", &choice);
 
-                if (toLower(choice) == 'y'){
+                if (/* yes*/){
                     floorLevel++;
                 }
                 break;
             case 'g':
                 printf("You found gold! Pick it up?\n");
                 printf("[y]es or [n]o --> ");
-                scanf("%c", &choice);
+                scanf("%s", &choice);
 
-                if (toLower(choice) == 'y'){
+                if (/* yes*/){
                     goldPickUp(floorLevel);
                 }
                 break;
@@ -142,4 +134,51 @@ void printDirections(int row, int col, int floorLevel){
 int isValidDirection(int row, int col){
     printf("FIXME: write function");
     return 1;
+}
+
+int moveCharacter(char direction, char floorMap[][], character player){
+
+    switch (direction)
+    {
+    case 'w':
+        while(player.row <= maxRows){
+            switch(floorMap[player.row][player.col]){
+                case ' ':
+                    player.row++;
+                    break;
+                case 'g':
+                    player.event = 'g';
+                    return player;
+                    break; 
+                case 'i':
+                    player.event = 'i':
+                    return player;
+                    break;
+                case 'm':
+                    player.event = 'm':
+                    return player;
+                    break;
+                case 'd':
+                    player.event = 'd':
+                    return player;
+                    break;
+                default:
+                    printf("Oh oh");
+            }
+        }
+        break;
+    case 'a':
+        while(player.col >= 0){
+
+        }
+
+    case 's':
+
+    case 'd':
+
+    
+    default:
+        break;
+    }
+    return player;
 }
