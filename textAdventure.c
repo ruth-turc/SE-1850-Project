@@ -137,11 +137,74 @@ int isValidDirection(int row, int col){
 }
 
 int moveCharacter(char direction, char floorMap[][], character player){
-
+    int maxRow = sizeof(floorMap) / sizeof(floorMap[0]);
+    int maxCol = sizeof(floorMap[0]) / sizeof(floorMap[0][0]);
     switch (direction)
     {
     case 'w':
-        while(player.row <= maxRows){
+        while(player.row >= 0){
+            switch(floorMap[player.row][player.col]){
+                case ' ':
+                    player.row--;
+                    break;
+                case 'g':
+                    player.event = 'g';
+                    return player;
+                    break; 
+                case 'i':
+                    player.event = 'i':
+                    return player;
+                    break;
+                case 'm':
+                    player.event = 'm':
+                    return player;
+                    break;
+                case 'd':
+                    player.event = 'd':
+                    return player;
+                    break;
+                case 'u':
+                    player.event = 'u':
+                    return player;
+                    break;
+                default:
+                    printf("Oh oh");
+            }
+        }
+        break;
+    case 'a':
+        while(player.col >= 0){
+            switch(floorMap[player.row][player.col]){
+                case ' ':
+                    player.col--;
+                    break;
+                case 'g':
+                    player.event = 'g';
+                    return player;
+                    break; 
+                case 'i':
+                    player.event = 'i':
+                    return player;
+                    break;
+                case 'm':
+                    player.event = 'm':
+                    return player;
+                    break;
+                case 'd':
+                    player.event = 'd':
+                    return player;
+                    break;
+                case 'u':
+                    player.event = 'u':
+                    return player;
+                    break;
+                default:
+                    printf("Oh oh");
+            }
+        }
+
+    case 's':
+        while(player.row < maxRow){
             switch(floorMap[player.row][player.col]){
                 case ' ':
                     player.row++;
@@ -162,22 +225,49 @@ int moveCharacter(char direction, char floorMap[][], character player){
                     player.event = 'd':
                     return player;
                     break;
+                case 'u':
+                    player.event = 'u':
+                    return player;
+                    break;
                 default:
                     printf("Oh oh");
             }
         }
-        break;
-    case 'a':
-        while(player.col >= 0){
-
-        }
-
-    case 's':
 
     case 'd':
+        while(player.col < maxCol){
+            switch(floorMap[player.row][player.col]){
+                case ' ':
+                    player.col++;
+                    break;
+                case 'g':
+                    player.event = 'g';
+                    return player;
+                    break; 
+                case 'i':
+                    player.event = 'i':
+                    return player;
+                    break;
+                case 'm':
+                    player.event = 'm':
+                    return player;
+                    break;
+                case 'd':
+                    player.event = 'd':
+                    return player;
+                    break;
+                case 'u':
+                    player.event = 'u':
+                    return player;
+                    break;
+                default:
+                    printf("Oh oh");
+            }
+        }
 
     
     default:
+        printf("Oh oh x2\n")
         break;
     }
     return player;
