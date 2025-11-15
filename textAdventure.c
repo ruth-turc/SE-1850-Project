@@ -7,8 +7,9 @@
 void printDirections(int row, int col, int floorLevel);
 int isValidDirection(int row, int col);
 
-int playerCombatNumber(character player);
-int monsterCombatNumber(int floorLevel);
+monster generateMonster(monster badGuy, int floorLevel);
+void printCombat(monster badGuy, character player);
+
 int goldPickUp(int floorLevel);
 
 
@@ -18,10 +19,15 @@ int goldPickUp(int floorLevel);
 typedef struct {
     int health;
     int gold;
-    char[10] inventory;
+    int combatBonus;
     int row;
     int col;
 } character;
+
+typedef struct {
+    int health;
+    int combatBonus;
+} monster;
 
 /* Maps!
         Key: 'u' = stairs up, 'd' = stairs down,'g' = gold, 
@@ -37,13 +43,17 @@ char floor2[3][3] = {{' ','i','d'},
                   {' ',' ','g'}};
 
 int main(){
-    //create character structure called player and assign health
+    /*create character structure called player, assign health, 
+        and start with combat bonus of 1 */
     character player;
     player.health = 100;
+    player.combatBonus = 1;
 
     //initialize player location on floor1
     player.row = 0;
     player.col = 0;
+
+    monster badGuy;
 
     int floorLevel = 1;
     char choice;
@@ -78,7 +88,7 @@ int main(){
                 printf("[y]es or [n]o --> ");
                 scanf("%c", &choice);
 
-                if (toLower(choice) == 'y'){
+                if (tolower(choice) == 'y'){
                     floorLevel++;
                 }
                 break;
@@ -90,15 +100,22 @@ int main(){
                 if (toLower(choice) == 'y'){
                     player.gold += goldPickUp(floorLevel);
                     printf("+%d gold\n",goldPickUp(floorLevel));
-                } else (toLower(choice) == 'n'){
+                } else (tolower(choice) == 'n'){
                     printf("You leave the gold.\n");
                 }
                 break;
             case 'm':
-                /* do we want a monster function that returns a different description
-                    of a monster based on floor level?? This function could also take
-                    care of combat.*/
+                printf("You run into a monster!\n");
+                printf("[f]ight or [r]un?");
+                scanf("%c", choice);
 
+                if (tolower(choice)=='f'){
+                    generateMonster(badGuy, floorLevel);
+                    printCombat(badGuy, player);
+                } else if (tolower(choice)=='r'){
+                    printf("coward.\n");
+                }
+                break;
             case 'i':
                 /* make its own function?*/
             case 'v':
@@ -147,7 +164,21 @@ int isValidDirection(int row, int col){
     return 1;
 }
 
+/*returns the amount of gold the player picks up
+    based on floorLevel*/
 int goldPickUp(int floorLevel){
     int gold = 2*floorLevel;
     return gold;
+}
+
+/* generates stats of the monster based on floorLevel */
+monster generateMonster(monster badGuy, int floorLevel){
+    badGuy.health = floorLevel * 5;
+    badGuy.combatBonus = floorLevel;
+
+    return badGuy;
+}
+
+void printCombat(monster badGuy, character player){
+    printf("The monster snarls its sharp teeth at you...\n");   
 }
