@@ -10,6 +10,7 @@ int isValidDirection(int row, int col);
 int playerCombatNumber(character player);
 int monsterCombatNumber(int floorLevel);
 int goldPickUp(int floorLevel);
+character moveCharacter(char direction, char floorMap[][], character player);
 
 
 /* structure to represent player */
@@ -136,7 +137,7 @@ int isValidDirection(int row, int col){
     return 1;
 }
 
-int moveCharacter(char direction, char floorMap[][], character player){
+character moveCharacter(char direction, char floorMap[][], character player){
     int maxRow = sizeof(floorMap) / sizeof(floorMap[0]);
     int maxCol = sizeof(floorMap[0]) / sizeof(floorMap[0][0]);
     switch (direction)
