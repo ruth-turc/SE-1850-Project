@@ -61,13 +61,13 @@ int main(){
     monster badGuy;
 
     int floorLevel = 1;
-    char choice[50];
+    char choice;
     
     printf("You awaken in a dark cave...\n");
 
     while (player.health > 0){
         printDirections(player.row, player.col, floorLevel);
-        scanf("%s", choice);
+        scanf("%c", choice);
         //add move character
         if (!isValidDirection(player.row, player.col)){
             printf("You run into a wall");
@@ -84,7 +84,7 @@ int main(){
                 printf("You find a set of stairs going down.\n");
                 printf("Would you like to decsend?\n");
                 printf("[y]es or [n]o --> ");
-                scanf("%s", &choice);
+                scanf("%c", &choice);
 
                 if (choice == 'y'){
                     floorLevel++;
@@ -93,7 +93,7 @@ int main(){
             case 'g':
                 printf("You found gold! Pick it up?\n");
                 printf("[y]es or [n]o --> ");
-                scanf("%s", &choice);
+                scanf("%c", &choice);
 
                 if (choice == 'y'){
                     player.gold += goldPickUp(floorLevel);
