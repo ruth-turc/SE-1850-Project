@@ -1,20 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <ctype.h>
 #include <time.h>
 
-/* PROTOTYPES */
-void printDirections(int row, int col, int floorLevel);
-int isValidDirection(int row, int col);
-
-monster generateMonster(monster badGuy, int floorLevel);
-void printCombat(monster badGuy, character player);
-
-int goldPickUp(int floorLevel);
-character moveCharacter(char direction, char floorMap[][3], character player);
-
-
-//comment from Jane
 
 /* structure to represent player */
 typedef struct {
@@ -23,12 +11,29 @@ typedef struct {
     int combatBonus;
     int row;
     int col;
+    char event;
 } character;
 
 typedef struct {
     int health;
     int combatBonus;
 } monster;
+
+
+
+/* PROTOTYPES */
+void printDirections(int row, int col, int floorLevel);
+int isValidDirection(int row, int col);
+
+monster generateMonster(monster badGuy, int floorLevel);
+void printCombat(monster badGuy, character player);
+int combatNumber(int combatBonus);
+
+int goldPickUp(int floorLevel);
+character moveCharacter(char direction, char floorMap[][], character player);
+
+
+
 
 /* Maps!
         Key: 'u' = stairs up, 'd' = stairs down,'g' = gold, 
@@ -71,17 +76,10 @@ int main(){
         } 
 
         /* I think we need to figure out something else for the maps...like make their own function???*/
-        switch (floor[player.row][player.column]){
+        switch (player.event){
             case 'u':
                 printf("You find a set of stairs going up.\n");
                 printf("You've been here before.\n");
-                printf("Would you like to acsend?\n");
-                printf("[y]es or [n]o --> ");
-                scanf("%c");
-                
-                if (toLower(choice) == 'y'){
-                    floorLevel--;
-                }
                 break;
             case 'd':
                 printf("You find a set of stairs going down.\n");
@@ -89,7 +87,7 @@ int main(){
                 printf("[y]es or [n]o --> ");
                 scanf("%c", &choice);
 
-                if (tolower(choice) == 'y'){
+                if (choice == 'y'){
                     floorLevel++;
                 }
                 break;
@@ -98,10 +96,10 @@ int main(){
                 printf("[y]es or [n]o --> ");
                 scanf("%c", &choice);
 
-                if (toLower(choice) == 'y'){
+                if (choice == 'y'){
                     player.gold += goldPickUp(floorLevel);
                     printf("+%d gold\n",goldPickUp(floorLevel));
-                } else (tolower(choice) == 'n'){
+                } else if (choice == 'n'){
                     printf("You leave the gold.\n");
                 }
                 break;
@@ -110,10 +108,10 @@ int main(){
                 printf("[f]ight or [r]un?");
                 scanf("%c", choice);
 
-                if (tolower(choice)=='f'){
+                if (choice =='f'){
                     generateMonster(badGuy, floorLevel);
                     printCombat(badGuy, player);
-                } else if (tolower(choice)=='r'){
+                } else if (choice =='r'){
                     printf("coward.\n");
                 }
                 break;
@@ -165,6 +163,143 @@ int isValidDirection(int row, int col){
     return 1;
 }
 
+character moveCharacter(char direction, char floorMap[][3], character player){
+    int maxRow = sizeof(floorMap) / sizeof(floorMap[0]);
+    int maxCol = sizeof(floorMap[0]) / sizeof(floorMap[0][0]);
+    switch (direction)
+    {
+    case 'w':
+        while(player.row >= 0){
+            switch(floorMap[player.row][player.col]){
+                case ' ':
+                    player.row--;
+                    break;
+                case 'g':
+                    player.event = 'g';
+                    return player;
+                    break; 
+                case 'i':
+                    player.event = 'i';
+                    return player;
+                    break;
+                case 'm':
+                    player.event = 'm';
+                    return player;
+                    break;
+                case 'd':
+                    player.event = 'd';
+                    return player;
+                    break;
+                case 'u':
+                    player.event = 'u';
+                    return player;
+                    break;
+                default:
+                    printf("Oh oh");
+            }
+        }
+        break;
+    case 'a':
+        while(player.col >= 0){
+            switch(floorMap[player.row][player.col]){
+                case ' ':
+                    player.col--;
+                    break;
+                case 'g':
+                    player.event = 'g';
+                    return player;
+                    break; 
+                case 'i':
+                    player.event = 'i';
+                    return player;
+                    break;
+                case 'm':
+                    player.event = 'm';
+                    return player;
+                    break;
+                case 'd':
+                    player.event = 'd';
+                    return player;
+                    break;
+                case 'u':
+                    player.event = 'u';
+                    return player;
+                    break;
+                default:
+                    printf("Oh oh");
+            }
+        }
+
+    case 's':
+        while(player.row < maxRow){
+            switch(floorMap[player.row][player.col]){
+                case ' ':
+                    player.row++;
+                    break;
+                case 'g':
+                    player.event = 'g';
+                    return player;
+                    break; 
+                case 'i':
+                    player.event = 'i';
+                    return player;
+                    break;
+                case 'm':
+                    player.event = 'm';
+                    return player;
+                    break;
+                case 'd':
+                    player.event = 'd';
+                    return player;
+                    break;
+                case 'u':
+                    player.event = 'u';
+                    return player;
+                    break;
+                default:
+                    printf("Oh oh");
+            }
+        }
+
+    case 'd':
+        while(player.col < maxCol){
+            switch(floorMap[player.row][player.col]){
+                case ' ':
+                    player.col++;
+                    break;
+                case 'g':
+                    player.event = 'g';
+                    return player;
+                    break; 
+                case 'i':
+                    player.event = 'i';
+                    return player;
+                    break;
+                case 'm':
+                    player.event = 'm';
+                    return player;
+                    break;
+                case 'd':
+                    player.event = 'd';
+                    return player;
+                    break;
+                case 'u':
+                    player.event = 'u';
+                    return player;
+                    break;
+                default:
+                    printf("Oh oh");
+            }
+        }
+
+    
+    default:
+        printf("Oh oh x2\n");
+        break;
+    }
+    return player;
+}
+
 /*returns the amount of gold the player picks up
     based on floorLevel*/
 int goldPickUp(int floorLevel){
@@ -181,5 +316,18 @@ monster generateMonster(monster badGuy, int floorLevel){
 }
 
 void printCombat(monster badGuy, character player){
-    printf("The monster snarls its sharp teeth at you...\n");   
+    int playerCombatNumber;
+    int monsterCombatNumber;
+    printf("The monster snarls its sharp teeth at you...\n");
+    while (monster.health >= 1){
+        
+    }   
+}
+
+int combatNumber(int combatBonus){
+    srand(time(NULL));
+    int combatNumber = (rand() % 6) + 1; //random number between 1-6
+    combatNumber += combatBonus;
+
+    return combatNumber;
 }
