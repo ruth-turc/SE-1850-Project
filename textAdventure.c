@@ -98,7 +98,7 @@ int main(){
                 if (choice == 'y'){
                     player.gold += goldPickUp(floorLevel);
                     printf("+%d gold\n",goldPickUp(floorLevel));
-                } else (choice == 'n'){
+                } else if (choice == 'n'){
                     printf("You leave the gold.\n");
                 }
                 break;
@@ -162,7 +162,7 @@ int isValidDirection(int row, int col){
     return 1;
 }
 
-character moveCharacter(char direction, char floorMap[][], character player){
+character moveCharacter(char direction, char floorMap[][3], character player){
     int maxRow = sizeof(floorMap) / sizeof(floorMap[0]);
     int maxCol = sizeof(floorMap[0]) / sizeof(floorMap[0][0]);
     switch (direction)
