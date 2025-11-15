@@ -3,16 +3,6 @@
 #include <string.h>
 #include <time.h>
 
-/* PROTOTYPES */
-void printDirections(int row, int col, int floorLevel);
-int isValidDirection(int row, int col);
-
-monster generateMonster(monster badGuy, int floorLevel);
-void printCombat(monster badGuy, character player);
-
-int goldPickUp(int floorLevel);
-character moveCharacter(char direction, char floorMap[][], character player);
-
 
 /* structure to represent player */
 typedef struct {
@@ -28,6 +18,21 @@ typedef struct {
     int health;
     int combatBonus;
 } monster;
+
+
+
+/* PROTOTYPES */
+void printDirections(int row, int col, int floorLevel);
+int isValidDirection(int row, int col);
+
+monster generateMonster(monster badGuy, int floorLevel);
+void printCombat(monster badGuy, character player);
+
+int goldPickUp(int floorLevel);
+character moveCharacter(char direction, char floorMap[][], character player);
+
+
+
 
 /* Maps!
         Key: 'u' = stairs up, 'd' = stairs down,'g' = gold, 
@@ -173,19 +178,19 @@ character moveCharacter(char direction, char floorMap[][], character player){
                     return player;
                     break; 
                 case 'i':
-                    player.event = 'i':
+                    player.event = 'i';
                     return player;
                     break;
                 case 'm':
-                    player.event = 'm':
+                    player.event = 'm';
                     return player;
                     break;
                 case 'd':
-                    player.event = 'd':
+                    player.event = 'd';
                     return player;
                     break;
                 case 'u':
-                    player.event = 'u':
+                    player.event = 'u';
                     return player;
                     break;
                 default:
@@ -204,19 +209,19 @@ character moveCharacter(char direction, char floorMap[][], character player){
                     return player;
                     break; 
                 case 'i':
-                    player.event = 'i':
+                    player.event = 'i';
                     return player;
                     break;
                 case 'm':
-                    player.event = 'm':
+                    player.event = 'm';
                     return player;
                     break;
                 case 'd':
-                    player.event = 'd':
+                    player.event = 'd';
                     return player;
                     break;
                 case 'u':
-                    player.event = 'u':
+                    player.event = 'u';
                     return player;
                     break;
                 default:
@@ -235,19 +240,19 @@ character moveCharacter(char direction, char floorMap[][], character player){
                     return player;
                     break; 
                 case 'i':
-                    player.event = 'i':
+                    player.event = 'i';
                     return player;
                     break;
                 case 'm':
-                    player.event = 'm':
+                    player.event = 'm';
                     return player;
                     break;
                 case 'd':
-                    player.event = 'd':
+                    player.event = 'd';
                     return player;
                     break;
                 case 'u':
-                    player.event = 'u':
+                    player.event = 'u';
                     return player;
                     break;
                 default:
@@ -266,19 +271,19 @@ character moveCharacter(char direction, char floorMap[][], character player){
                     return player;
                     break; 
                 case 'i':
-                    player.event = 'i':
+                    player.event = 'i';
                     return player;
                     break;
                 case 'm':
-                    player.event = 'm':
+                    player.event = 'm';
                     return player;
                     break;
                 case 'd':
-                    player.event = 'd':
+                    player.event = 'd';
                     return player;
                     break;
                 case 'u':
-                    player.event = 'u':
+                    player.event = 'u';
                     return player;
                     break;
                 default:
@@ -288,7 +293,7 @@ character moveCharacter(char direction, char floorMap[][], character player){
 
     
     default:
-        printf("Oh oh x2\n")
+        printf("Oh oh x2\n");
         break;
     }
     return player;
