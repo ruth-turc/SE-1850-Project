@@ -19,6 +19,12 @@ typedef struct {
     int combatBonus;
 } monster;
 
+typedef struct {
+    int row;
+    int col;
+    char** floor; //pointer to array of pointers to arrays of chars, first * is to a row and second * is to a column 
+} map;
+
 
 
 /* PROTOTYPES */
@@ -29,7 +35,7 @@ monster generateMonster(monster badGuy, int floorLevel);
 void printCombat(monster badGuy, character player);
 
 int goldPickUp(int floorLevel);
-character moveCharacter(char direction, char floorMap[][], character player);
+character moveCharacter(char direction, map floorMap, character player);
 
 
 
@@ -40,12 +46,7 @@ character moveCharacter(char direction, char floorMap[][], character player);
     We might eventually want to make a function that will return
     the maps instead of declaring them here?
 */
-char floor1[2][3] = {{' ','m','g'},
-                  {' ',' ','d'}};
 
-char floor2[3][3] = {{' ','i','d'},
-                  {'u','m',' '},
-                  {' ',' ','g'}};
 
 int main(){
     /*create character structure called player, assign health, 
@@ -53,6 +54,12 @@ int main(){
     character player;
     player.health = 100;
     player.combatBonus = 1;
+
+    //definition of array of pointers to sctructs for each floor
+    map* levels[NUM_FLOORS];
+
+    initFloors(map* levels[NUM_FLOORS]);
+    
 
     //initialize player location on floor1
     player.row = 0;
@@ -65,20 +72,23 @@ int main(){
     
     printf("You awaken in a dark cave...\n");
 
+
+
     while (player.health > 0){
         printDirections(player.row, player.col, floorLevel);
         scanf("%c", choice);
-        //add move character
+        event = moveCharacter(choice,levels[floorLevel],player);
         if (!isValidDirection(player.row, player.col)){
-            printf("You run into a wall");
+            printf("You run into a wall\n");
             continue;
         } 
 
-        /* I think we need to figure out something else for the maps...like make their own function???*/
+        /* I think we need to figure out something else for the maps...like make their own function???*/ 
         switch (player.event){
             case 'u':
                 printf("You find a set of stairs going up.\n");
                 printf("You've been here before.\n");
+                floorLevel++;
                 break;
             case 'd':
                 printf("You find a set of stairs going down.\n");
@@ -98,11 +108,7 @@ int main(){
                 if (choice == 'y'){
                     player.gold += goldPickUp(floorLevel);
                     printf("+%d gold\n",goldPickUp(floorLevel));
-<<<<<<< HEAD
                 } else if(tolower(choice) == 'n'){
-=======
-                } else (choice == 'n'){
->>>>>>> 4f2d88b937de0ddb621febcccc98f6bb777d1d15
                     printf("You leave the gold.\n");
                 }
                 break;
@@ -166,14 +172,19 @@ int isValidDirection(int row, int col){
     return 1;
 }
 
-character moveCharacter(char direction, char floorMap[][3], character player){
-    int maxRow = sizeof(floorMap) / sizeof(floorMap[0]);
-    int maxCol = sizeof(floorMap[0]) / sizeof(floorMap[0][0]);
+map currentMap(floorLevel){
+    
+}
+//moves the player in the chosen direction
+character moveCharacter(char direction, map* floorStructPtr, character player){
+    int maxRow = floorStructPtr->row;
+    int maxCol = floorStructPtr->col;
+    
     switch (direction)
     {
     case 'w':
         while(player.row >= 0){
-            switch(floorMap[player.row][player.col]){
+            switch(map->floor[player.row][player.col]){
                 case ' ':
                     player.row--;
                     break;
@@ -204,7 +215,7 @@ character moveCharacter(char direction, char floorMap[][3], character player){
         break;
     case 'a':
         while(player.col >= 0){
-            switch(floorMap[player.row][player.col]){
+            switch(map->floor[player.row][player.col]){
                 case ' ':
                     player.col--;
                     break;
@@ -235,7 +246,7 @@ character moveCharacter(char direction, char floorMap[][3], character player){
 
     case 's':
         while(player.row < maxRow){
-            switch(floorMap[player.row][player.col]){
+            switch(map->floor[player.row][player.col]){
                 case ' ':
                     player.row++;
                     break;
@@ -266,7 +277,7 @@ character moveCharacter(char direction, char floorMap[][3], character player){
 
     case 'd':
         while(player.col < maxCol){
-            switch(floorMap[player.row][player.col]){
+            switch(map->floor[player.row][player.col]){
                 case ' ':
                     player.col++;
                     break;
@@ -321,3 +332,50 @@ monster generateMonster(monster badGuy, int floorLevel){
 void printCombat(monster badGuy, character player){
     printf("The monster snarls its sharp teeth at you...\n");   
 }
+
+
+//creates space in memory needed for each floor depending on num of rows and colms and returns a pointer to it
+map* createFloor(int row, int col){
+    map* map1 = (map*)malloc(sizeof(map));
+    map1 -> row = row;
+    map1 -> col = col;
+
+    map1->floor = malloc(row*sizeof(char*));
+    for(int i = 0; i < row; i++){
+        map1->floor[i] = malloc(col * sizeof(char));
+    }
+    return map1;
+}
+
+//initialization of floors
+void initFloors(map* levels[]){
+    levels[0] = createFloor(2,3);
+    char temp1[2][3] = {{' ','m','g'},
+                       {' ',' ','d'}};
+    fillFloor(levels,0,3,temp1);
+
+    levels[1] = createFloor(3,3);
+    char temp2[3][3] = {{' ','i','d'},
+                  {'u','m',' '},
+                  {' ',' ','g'}};
+
+    fillFloor(levels,1,3,temp2);
+}
+
+//fills the floor with attributes of given 2D array
+void fillFloor(map* levels[], int floorNum,int col, char temp[][col]){
+    for (int r = 0; r < levels[floorNum]->row; r++){
+        for(int c = 0; c < levels[floorNum]->col; c++){
+            levels[floorNum]->floor[r][c] = temp[r][c];
+        }
+    }
+}
+//frees the memory in one floor
+void freeFloor(map* map){
+    for(int i = 0; i < map->row; i++){
+        free(map->floor[i]);
+    }
+    free(map->floor);
+    free(map);
+}
+
