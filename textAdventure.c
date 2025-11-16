@@ -3,6 +3,8 @@
 #include <ctype.h>
 #include <time.h>
 
+#define NUM_FLOORS 2
+
 
 /* structure to represent player */
 typedef struct {
@@ -36,6 +38,13 @@ void printCombat(monster badGuy, character player);
 
 int goldPickUp(int floorLevel);
 character moveCharacter(char direction, map floorMap, character player);
+
+map* createFloor(int row, int col);
+void initFloors(map* levels[]);
+void fillFloor(map* levels[], int floorNum,int col, char temp[][col]);
+void freeFloor(map* map);
+
+
 
 
 
@@ -97,7 +106,7 @@ int main(){
                 scanf("%c", &choice);
 
                 if (choice == 'y'){
-                    floorLevel++;
+                    floorLevel--;
                 }
                 break;
             case 'g':
