@@ -30,6 +30,7 @@ void printCombat(monster badGuy, character player);
 int combatNumber(int combatBonus);
 
 int goldPickUp(int floorLevel);
+
 character moveCharacter(char direction, char floorMap[][], character player);
 
 
