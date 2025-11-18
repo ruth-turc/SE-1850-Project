@@ -117,7 +117,7 @@ int main(){
                 if (choice == 'y'){
                     player.gold += goldPickUp(floorLevel);
                     printf("+%d gold\n",goldPickUp(floorLevel));
-                } else if(tolower(choice) == 'n'){
+                } else if (choice == 'n'){
                     printf("You leave the gold.\n");
                 }
                 break;
