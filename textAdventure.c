@@ -31,7 +31,6 @@ typedef struct {
 
 /* PROTOTYPES */
 void printDirections(int row, int col, map* floorStruct);
-int isValidDirection(int row, int col);
 
 monster generateMonster(monster badGuy, int floorLevel);
 void printCombat(monster badGuy, character player);
@@ -174,10 +173,6 @@ void printDirections(int row, int col, map* floorStruct){
     }
 }
 
-int isValidDirection(int row, int col){
-    printf("FIXME: write function");
-    return 1;
-}
 
 //moves the player in the chosen direction
 character moveCharacter(char direction, map* floorStructPtr, character player){
