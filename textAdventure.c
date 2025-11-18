@@ -120,6 +120,12 @@ int main(){
             case 'v':
                 /* same here? */
         };
+
+        if (player.health < 1){
+            printf("~~~~~~ DEATH ~~~~~~\n");
+            printf("Game over, loser.\n");
+            break;
+        }
     }
 
     
@@ -316,12 +322,42 @@ monster generateMonster(monster badGuy, int floorLevel){
 }
 
 void printCombat(monster badGuy, character player){
-    int playerCombatNumber;
-    int monsterCombatNumber;
+    int playerDamage;
+    int monsterDamage;
+    char attack;
+
+    //prompt user to attack
     printf("The monster snarls its sharp teeth at you...\n");
-    while (monster.health >= 1){
+    printf("Enter any key to attack --> \n");
+    scanf("%c",attack);
+
+    //Player attacks
+    playerDamage = combatNumber(player.combatBonus);
+    badGuy.health -= playerDamage;
+    printf("You delt %d damage!\n", playerDamage);
+
+    //while the player is still alive and the monster is still alive
+    while ((badGuy.health >= 1)||(player.health >= 1)){
+        //moster attacks
+        printf("The monster swings at you...\n");
+        monsterDamage = combatNumber(badGuy.combatBonus);
+        player.health -= monsterDamage;
+        printf("The monster hit you for %d damage!\n",monsterDamage);
+
+        //prompt player to attack
+        printf("Enter any key to attack --> \n");
+        scanf("%c",attack);
+
+        //player attacks
+        playerDamage = combatNumber(player.combatBonus);
+        badGuy.health -= playerDamage;
+        printf("You delt %d damage!\n", playerDamage);
         
-    }   
+    }
+    
+    if (badGuy.health < 1){
+        printf("~~~~~~ VICTORY! ~~~~~~\n");
+    }
 }
 
 int combatNumber(int combatBonus){
