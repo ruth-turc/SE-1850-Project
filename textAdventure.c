@@ -30,7 +30,7 @@ typedef struct {
 
 
 /* PROTOTYPES */
-void printDirections(int row, int col, int floorLevel);
+void printDirections(int row, int col, map* floorStruct);
 int isValidDirection(int row, int col);
 
 monster generateMonster(monster badGuy, int floorLevel);
@@ -85,13 +85,10 @@ int main(){
 
 
     while (player.health > 0){
-        printDirections(player.row, player.col, floorLevel);
+        printDirections(player.row, player.col,levels[floorLevel]);
         scanf("%c", choice);
         player = moveCharacter(choice,levels[floorLevel],player);
-        if (!isValidDirection(player.row, player.col)){
-            printf("You run into a wall\n");
-            continue;
-        } 
+        
 
         /* I think we need to figure out something else for the maps...like make their own function???*/ 
         switch (player.event){
@@ -138,7 +135,9 @@ int main(){
                 /* make its own function?*/
             case 'v':
                 /* same here? */
-        };
+            default:
+                continue;
+        }
 
         if (player.health < 1){
             printf("~~~~~~ DEATH ~~~~~~\n");
@@ -153,19 +152,11 @@ int main(){
 
 /* FUNCTIONS!!!*/
 
-void printDirections(int row, int col, int floorLevel){
+void printDirections(int row, int col, map* floorStruct){
     //find the max row and column index for a specific floor level
     int max_row, max_col;
-    switch (floorLevel){
-        case 1:
-            max_row = 2;
-            max_col = 1;
-            break;
-        case 2:
-            max_row = 2;
-            max_col = 2;
-            break;
-    };
+    max_row = floorStruct->row;
+    max_col = floorStruct->col;
 
     //print possible directions
     printf("what would you like to do?\n");
@@ -321,7 +312,7 @@ character moveCharacter(char direction, map* floorStructPtr, character player){
 
     
     default:
-        printf("Oh oh x2\n");
+        printf("Wrong Input!\n");
         break;
     }
     return player;
