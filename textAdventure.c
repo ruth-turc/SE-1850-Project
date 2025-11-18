@@ -9,8 +9,10 @@
 /* structure to represent player */
 typedef struct {
     int health;
+    int maxHealth;
     int gold;
     int combatBonus;
+
     int row;
     int col;
     char event;
@@ -24,20 +26,21 @@ typedef struct {
 typedef struct {
     int row;
     int col;
-    char** floor; //pointer to array of pointers to arrays of chars, first * is to a row and second * is to a column 
+    char** floor; /*pointer to array of pointers to arrays of chars, 
+                    first * is to a row and second * is to a column */
 } map;
 
 
 
 /* PROTOTYPES */
 void printDirections(int row, int col, int floorLevel);
-int isValidDirection(int row, int col);
 
 monster generateMonster(monster badGuy, int floorLevel);
-void printCombat(monster badGuy, character player);
+character printCombat(monster badGuy, character player);
 int combatNumber(int combatBonus);
 
 int goldPickUp(int floorLevel);
+character itemPickUp(character player, int floorLevel);
 character moveCharacter(char direction, map* floorMap, character player);
 
 map* createFloor(int row, int col);
@@ -45,24 +48,12 @@ void initFloors(map* levels[]);
 void fillFloor(map* levels[], int floorNum,int col, char temp[][col]);
 void freeFloor(map* map);
 
-
-
-
-
-
-/* Maps!
-        Key: 'u' = stairs up, 'd' = stairs down,'g' = gold, 
-            'm' = monster, 'i' = item, 'v' = vender/merchant
-    We might eventually want to make a function that will return
-    the maps instead of declaring them here?
-*/
-
-
 int main(){
     /*create character structure called player, assign health, 
         and start with combat bonus of 1 */
     character player;
-    player.health = 100;
+    player.health = 5;
+    player.maxHealth = 5;
     player.combatBonus = 1;
 
     //definition of array of pointers to sctructs for each floor
@@ -83,7 +74,7 @@ int main(){
     printf("You awaken in a dark cave...\n");
 
 
-
+    //game loop!
     while (player.health > 0){
         printDirections(player.row, player.col, floorLevel);
         scanf("%c", choice);
@@ -93,14 +84,13 @@ int main(){
             continue;
         } 
 
-        /* I think we need to figure out something else for the maps...like make their own function???*/ 
         switch (player.event){
-            case 'u':
+            case 'u': //stairs going up
                 printf("You find a set of stairs going up.\n");
                 printf("You've been here before.\n");
                 floorLevel++;
                 break;
-            case 'd':
+            case 'd': //stairs going down
                 printf("You find a set of stairs going down.\n");
                 printf("Would you like to decsend?\n");
                 printf("[y]es or [n]o --> ");
@@ -110,7 +100,7 @@ int main(){
                     floorLevel--;
                 }
                 break;
-            case 'g':
+            case 'g': //GOLD!
                 printf("You found gold! Pick it up?\n");
                 printf("[y]es or [n]o --> ");
                 scanf("%c", &choice);
@@ -122,24 +112,35 @@ int main(){
                     printf("You leave the gold.\n");
                 }
                 break;
-            case 'm':
+            case 'm': //monster
                 printf("You run into a monster!\n");
                 printf("[f]ight or [r]un?");
                 scanf("%c", choice);
 
                 if (choice =='f'){
                     generateMonster(badGuy, floorLevel);
-                    printCombat(badGuy, player);
+                    player = printCombat(badGuy, player);
                 } else if (choice =='r'){
                     printf("coward.\n");
                 }
                 break;
-            case 'i':
-                /* make its own function?*/
+            case 'i': //item
+                printf("It may be dark, but you think you see something on the ground...\n");
+                printf("Pick it up?\n");
+                printf("[y]es or [n]o? --> ");
+                scanf("%c", choice);
+
+                if (choice == 'y'){
+                    player = itemPickUp(player, floorLevel);
+                } else if (choice == 'n'){
+                    printf("You leave the item\n");
+                }
+                
             case 'v':
                 /* same here? */
-        };
+        }
 
+        //if player is dead, exit loop, and print death statement
         if (player.health < 1){
             printf("~~~~~~ DEATH ~~~~~~\n");
             printf("Game over, loser.\n");
@@ -181,11 +182,6 @@ void printDirections(int row, int col, int floorLevel){
     if (col != 0){
         printf("go west[a]");
     }
-}
-
-int isValidDirection(int row, int col){
-    printf("FIXME: write function");
-    return 1;
 }
 
 //moves the player in the chosen direction
@@ -334,6 +330,34 @@ int goldPickUp(int floorLevel){
     return gold;
 }
 
+//pick up a randomized item
+character itemPickUp(character player, int floorLevel){
+    srand(time(NULL));
+    int itemChoice = (rand() % 4) + 1; //random number between 1-4
+
+    switch (itemChoice){
+        case 1: //new weapon
+            printf("Its a shiny new sword!!\n");
+            printf("Combat Bonus +1\n");
+            player.combatBonus += 1;
+            break;
+
+        case 2: //new armor
+            printf("Its a new peice of amor!\n");
+            printf("Max health +5\n");
+            player.maxHealth += 5;
+            break;
+
+        case 3: //healing potion
+            printf("Its a healing potion!\n");
+            printf("+%d health",player.maxHealth);
+
+        default:
+            printf("You reach to grab it...but theres nothing there.\n");
+            printf("Your eyes must have decieved you.\n");
+    }
+}
+
 /* generates stats of the monster based on floorLevel */
 monster generateMonster(monster badGuy, int floorLevel){
     badGuy.health = floorLevel * 5;
@@ -342,7 +366,8 @@ monster generateMonster(monster badGuy, int floorLevel){
     return badGuy;
 }
 
-void printCombat(monster badGuy, character player){
+//print and execute combat
+character printCombat(monster badGuy, character player){
     printf("The monster snarls its sharp teeth at you...\n");
     int playerDamage;
     int monsterDamage;
@@ -380,6 +405,8 @@ void printCombat(monster badGuy, character player){
     if (badGuy.health < 1){
         printf("~~~~~~ VICTORY! ~~~~~~\n");
     }   
+
+    return player;
 }
 
 int combatNumber(int combatBonus){
@@ -405,6 +432,10 @@ map* createFloor(int row, int col){
 
 //initialization of floors
 void initFloors(map* levels[]){
+    /* Maps!
+        Key: 'u' = stairs up, 'd' = stairs down,'g' = gold, 
+            'm' = monster, 'i' = item, 'v' = vender/merchant
+    */
     levels[0] = createFloor(2,3);
     char temp1[2][3] = {{' ','m','g'},
                        {' ',' ','d'}};
