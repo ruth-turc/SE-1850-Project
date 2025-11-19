@@ -40,7 +40,9 @@ character printCombat(monster badGuy, character player);
 int combatNumber(int combatBonus);
 
 int goldPickUp(int floorLevel);
-character itemPickUp(character player, int floorLevel);
+character itemPickUp(character player);
+character shop(character player, int floorLevel);
+
 character moveCharacter(char direction, map* floorMap, character player);
 
 map* createFloor(int row, int col);
@@ -77,7 +79,7 @@ int main(){
     //game loop!
     while (player.health > 0){
         printDirections(player.row, player.col, floorLevel);
-        scanf("%c", choice);
+        scanf("%c", &choice);
         player = moveCharacter(choice,levels[floorLevel],player);
         if (!isValidDirection(player.row, player.col)){
             printf("You run into a wall\n");
@@ -88,7 +90,13 @@ int main(){
             case 'u': //stairs going up
                 printf("You find a set of stairs going up.\n");
                 printf("You've been here before.\n");
-                floorLevel++;
+                printf("Would you like to ascend?\n");
+                printf("[y]es or [n]o? --> ");
+                scanf("%c",&choice);
+
+                if (choice == 'y'){
+                    floorLevel--;
+                }
                 break;
             case 'd': //stairs going down
                 printf("You find a set of stairs going down.\n");
@@ -97,7 +105,7 @@ int main(){
                 scanf("%c", &choice);
 
                 if (choice == 'y'){
-                    floorLevel--;
+                    floorLevel++;
                 }
                 break;
             case 'g': //GOLD!
@@ -115,7 +123,7 @@ int main(){
             case 'm': //monster
                 printf("You run into a monster!\n");
                 printf("[f]ight or [r]un?");
-                scanf("%c", choice);
+                scanf("%c", &choice);
 
                 if (choice =='f'){
                     generateMonster(badGuy, floorLevel);
@@ -128,16 +136,25 @@ int main(){
                 printf("It may be dark, but you think you see something on the ground...\n");
                 printf("Pick it up?\n");
                 printf("[y]es or [n]o? --> ");
-                scanf("%c", choice);
+                scanf("%c", &choice);
 
                 if (choice == 'y'){
-                    player = itemPickUp(player, floorLevel);
+                    player = itemPickUp(player);
                 } else if (choice == 'n'){
                     printf("You leave the item\n");
                 }
-                
-            case 'v':
-                /* same here? */
+                break;
+            case 'v': //vender or merchant
+                printf("You run into a traveling merchant!\n");
+                printf("would you like to shop?\n");
+                printf("[y]es or [n]o --> \n");
+                scanf("%c", &choice);
+
+                if (choice == 'y'){
+                    player = shop(player,floorLevel);
+                } else if (choice == 'n'){
+                    printf("You walk away.\n");
+                }
         }
 
         //if player is dead, exit loop, and print death statement
@@ -331,7 +348,7 @@ int goldPickUp(int floorLevel){
 }
 
 //pick up a randomized item
-character itemPickUp(character player, int floorLevel){
+character itemPickUp(character player){
     srand(time(NULL));
     int itemChoice = (rand() % 4) + 1; //random number between 1-4
 
@@ -351,10 +368,44 @@ character itemPickUp(character player, int floorLevel){
         case 3: //healing potion
             printf("Its a healing potion!\n");
             printf("+%d health",player.maxHealth);
+            player.health = player.maxHealth;
 
         default:
             printf("You reach to grab it...but theres nothing there.\n");
             printf("Your eyes must have decieved you.\n");
+    }
+}
+
+/* generates a merchant selling items
+    prices are based off of floor level */
+character shop(character player, int floorLevel){
+    int healPrice = floorLevel*2;
+    int armorPrice = floorLevel + 5;
+    int weaponPrice = floorLevel + 1;
+    int keepShoping = 1;
+    char choice;
+
+    printf("\t~~~SHOP~~~\n");
+    printf("Items Available: \n");
+    printf("Healing Potion (heal up to max HP): %d gold", healPrice);
+    printf("Armor Upgrade (increase max HP): %d gold", armorPrice);
+    printf("Weapon Upgrade (increase combat bonus): %d gold", weaponPrice);
+
+    while (keepShoping){
+        printf("What would you like to buy? \n");
+        printf("[h]ealing potion, [a]rmor upgrade, [w]eapon upgrade --> ");
+        scanf("%c", &choice);
+        switch (choice){
+            case 'h':
+                
+            case 'a':
+
+            case 'w':
+
+            default:
+                printf("Item not recognized. Try again.\n");
+                continue;
+        }
     }
 }
 
