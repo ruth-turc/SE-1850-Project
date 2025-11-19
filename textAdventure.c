@@ -78,10 +78,10 @@ int main(){
 
     //game loop!
     while (player.health > 0){
-        printDirections(player.row, player.col, floorLevel);
-        scanf("%c", &choice);
-        player = moveCharacter(choice,levels[floorLevel],player);
-        
+        printDirections(player.row, player.col, levels[floorLevel-1]);
+        scanf(" %c", &choice);
+        player = moveCharacter(choice,levels[floorLevel-1],player);
+        printf("\n");
 
         switch (player.event){
             case 'u': //stairs going up
@@ -89,7 +89,7 @@ int main(){
                 printf("You've been here before.\n");
                 printf("Would you like to ascend?\n");
                 printf("[y]es or [n]o? --> ");
-                scanf("%c",&choice);
+                scanf(" %c",&choice);
 
                 if (choice == 'y'){
                     floorLevel--;
@@ -99,7 +99,7 @@ int main(){
                 printf("You find a set of stairs going down.\n");
                 printf("Would you like to decsend?\n");
                 printf("[y]es or [n]o --> ");
-                scanf("%c", &choice);
+                scanf(" %c", &choice);
 
                 if (choice == 'y'){
                     floorLevel++;
@@ -108,7 +108,7 @@ int main(){
             case 'g': //GOLD!
                 printf("You found gold! Pick it up?\n");
                 printf("[y]es or [n]o --> ");
-                scanf("%c", &choice);
+                scanf(" %c", &choice);
 
                 if (choice == 'y'){
                     player.gold += goldPickUp(floorLevel);
@@ -119,8 +119,8 @@ int main(){
                 break;
             case 'm': //monster
                 printf("You run into a monster!\n");
-                printf("[f]ight or [r]un?");
-                scanf("%c", &choice);
+                printf("[f]ight or [r]un? --> ");
+                scanf(" %c", &choice);
 
                 if (choice =='f'){
                     generateMonster(badGuy, floorLevel);
@@ -133,7 +133,7 @@ int main(){
                 printf("It may be dark, but you think you see something on the ground...\n");
                 printf("Pick it up?\n");
                 printf("[y]es or [n]o? --> ");
-                scanf("%c", &choice);
+                scanf(" %c", &choice);
 
                 if (choice == 'y'){
                     player = itemPickUp(player);
@@ -145,13 +145,16 @@ int main(){
                 printf("You run into a traveling merchant!\n");
                 printf("would you like to shop?\n");
                 printf("[y]es or [n]o --> \n");
-                scanf("%c", &choice);
+                scanf(" %c", &choice);
 
                 if (choice == 'y'){
                     player = shop(player,floorLevel);
                 } else if (choice == 'n'){
                     printf("You walk away.\n");
                 }
+                printf("\n");
+            default:
+                continue;
         }
 
         //if player is dead, exit loop, and print death statement
@@ -198,7 +201,7 @@ character moveCharacter(char direction, map* floorStructPtr, character player){
     switch (direction)
     {
     case 'w':
-        while(player.row >= 0){
+        while(player.row > 0){
             switch(floorStructPtr->floor[player.row][player.col]){
                 case ' ':
                     player.row--;
@@ -229,7 +232,7 @@ character moveCharacter(char direction, map* floorStructPtr, character player){
         }
         break;
     case 'a':
-        while(player.col >= 0){
+        while(player.col > 0){
             switch(floorStructPtr->floor[player.row][player.col]){
                 case ' ':
                     player.col--;
@@ -414,9 +417,8 @@ character printCombat(monster badGuy, character player){
     char attack;
 
     //prompt user to attack
-    printf("The monster snarls its sharp teeth at you...\n");
-    printf("Enter any key to attack --> \n");
-    scanf("%c",attack);
+    printf("Enter any key to attack --> ");
+    scanf(" %c",attack);
 
     //Player attacks
     playerDamage = combatNumber(player.combatBonus);
@@ -432,8 +434,8 @@ character printCombat(monster badGuy, character player){
         printf("The monster hit you for %d damage!\n",monsterDamage);
 
         //prompt player to attack
-        printf("Enter any key to attack --> \n");
-        scanf("%c",attack);
+        printf("Enter any key to attack --> ");
+        scanf(" %c",attack);
 
         //player attacks
         playerDamage = combatNumber(player.combatBonus);
