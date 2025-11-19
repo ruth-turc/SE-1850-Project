@@ -54,8 +54,8 @@ int main(){
     /*create character structure called player, assign health, 
         and start with combat bonus of 1 */
     character player;
-    player.health = 5;
-    player.maxHealth = 5;
+    player.health = 10;
+    player.maxHealth = 10;
     player.combatBonus = 1;
 
     //definition of array of pointers to sctructs for each floor
@@ -123,10 +123,10 @@ int main(){
                 scanf(" %c", &choice);
 
                 if (choice =='f'){
-                    generateMonster(badGuy, floorLevel);
+                    badGuy = generateMonster(badGuy, floorLevel);
                     player = printCombat(badGuy, player);
                 } else if (choice =='r'){
-                    printf("coward.\n");
+                    printf("coward.\n\n");
                 }
                 break;
             case 'i': //item
@@ -227,10 +227,11 @@ character moveCharacter(char direction, map* floorStructPtr, character player){
                     return player;
                     break;
                 default:
-                    printf("Oh oh");
+                    printf("w");
             }
         }
         break;
+
     case 'a':
         while(player.col > 0){
             switch(floorStructPtr->floor[player.row][player.col]){
@@ -258,12 +259,14 @@ character moveCharacter(char direction, map* floorStructPtr, character player){
                     return player;
                     break;
                 default:
-                    printf("Oh oh");
+                    printf("a");
             }
         }
+        break;
 
     case 's':
         while(player.row < maxRow){
+            printf("%c\n",floorStructPtr->floor[player.row][player.col]);
             switch(floorStructPtr->floor[player.row][player.col]){
                 case ' ':
                     player.row++;
@@ -289,9 +292,10 @@ character moveCharacter(char direction, map* floorStructPtr, character player){
                     return player;
                     break;
                 default:
-                    printf("Oh oh");
+                    printf("s");
             }
         }
+        break;
 
     case 'd':
         while(player.col < maxCol){
@@ -320,9 +324,10 @@ character moveCharacter(char direction, map* floorStructPtr, character player){
                     return player;
                     break;
                 default:
-                    printf("Oh oh");
+                   printf("d");
             }
         }
+        break;
 
     
     default:
@@ -403,7 +408,7 @@ character shop(character player, int floorLevel){
 
 /* generates stats of the monster based on floorLevel */
 monster generateMonster(monster badGuy, int floorLevel){
-    badGuy.health = floorLevel * 5;
+    badGuy.health = floorLevel*3;
     badGuy.combatBonus = floorLevel;
 
     return badGuy;
@@ -411,41 +416,48 @@ monster generateMonster(monster badGuy, int floorLevel){
 
 //print and execute combat
 character printCombat(monster badGuy, character player){
-    printf("The monster snarls its sharp teeth at you...\n");
+    printf("The monster snarls its sharp teeth at you...\n\n");
     int playerDamage;
     int monsterDamage;
     char attack;
 
     //prompt user to attack
     printf("Enter any key to attack --> ");
-    scanf(" %c",attack);
+    scanf(" %c",&attack);
 
     //Player attacks
     playerDamage = combatNumber(player.combatBonus);
-    badGuy.health -= playerDamage;
+    badGuy.health = badGuy.health -  playerDamage;
     printf("You delt %d damage!\n", playerDamage);
+    printf("\n");
 
     //while the player is still alive and the monster is still alive
-    while ((badGuy.health >= 1)||(player.health >= 1)){
+    while (badGuy.health >= 0){
+
         //moster attacks
         printf("The monster swings at you...\n");
         monsterDamage = combatNumber(badGuy.combatBonus);
         player.health -= monsterDamage;
         printf("The monster hit you for %d damage!\n",monsterDamage);
+        printf("\n");
+
+        if (player.health < 1){
+            break; 
+        }
 
         //prompt player to attack
         printf("Enter any key to attack --> ");
-        scanf(" %c",attack);
+        scanf(" %c",&attack);
 
         //player attacks
         playerDamage = combatNumber(player.combatBonus);
         badGuy.health -= playerDamage;
         printf("You delt %d damage!\n", playerDamage);
-        
+        printf("\n");
     }
     
     if (badGuy.health < 1){
-        printf("~~~~~~ VICTORY! ~~~~~~\n");
+        printf("\n~~~~~~ VICTORY! ~~~~~~\n\n");
     }   
 
     return player;
@@ -458,48 +470,3 @@ int combatNumber(int combatBonus){
 
     return combatNumber;
 }
-
-// //creates space in memory needed for each floor depending on num of rows and colms and returns a pointer to it
-// map* createFloor(int row, int col){
-//     map* map1 = (map*)malloc(sizeof(map));
-//     map1 -> row = row;
-//     map1 -> col = col;
-
-//     map1->floor = malloc(row*sizeof(char*));
-//     for(int i = 0; i < row; i++){
-//         map1->floor[i] = malloc(col * sizeof(char));
-//     }
-//     return map1;
-// }
-
-// //initialization of floors
-// void initFloors(map* levels[]){
-//     levels[0] = createFloor(2,3);
-//     char temp1[2][3] = {{' ','m','g'},
-//                        {' ',' ','d'}};
-//     fillFloor(levels,0,3,temp1);
-
-//     levels[1] = createFloor(3,3);
-//     char temp2[3][3] = {{' ','i','d'},
-//                   {'u','m',' '},
-//                   {' ',' ','g'}};
-
-//     fillFloor(levels,1,3,temp2);
-// }
-
-// //fills the floor with attributes of given 2D array
-// void fillFloor(map* levels[], int floorNum,int col, char temp[][col]){
-//     for (int r = 0; r < levels[floorNum]->row; r++){
-//         for(int c = 0; c < levels[floorNum]->col; c++){
-//             levels[floorNum]->floor[r][c] = temp[r][c];
-//         }
-//     }
-// }
-// //frees the memory in one floor
-// void freeFloor(map* map){
-//     for(int i = 0; i < map->row; i++){
-//         free(map->floor[i]);
-//     }
-//     free(map->floor);
-//     free(map);
-// }
