@@ -78,6 +78,8 @@ int main(){
 
     //game loop!
     while (player.health > 0){
+        printf("YOUR HP: %d\n",player.health);
+
         printDirections(player.row, player.col, levels[floorLevel-1]);
         scanf(" %c", &choice);
         player = moveCharacter(choice,levels[floorLevel-1],player);
@@ -391,19 +393,49 @@ character shop(character player, int floorLevel){
     while (keepShoping){
         printf("What would you like to buy? \n");
         printf("[h]ealing potion, [a]rmor upgrade, [w]eapon upgrade --> ");
-        scanf("%c", &choice);
+        scanf(" %c", &choice);
+
         switch (choice){
             case 'h':
-                
+                if (player.gold >= healPrice){
+                    player.gold -= healPrice;
+                    printf("-%d gold\n", healPrice);
+                    printf("+%d HP\n", player.maxHealth);
+                    player.health = player.maxHealth;
+                } else {
+                    printf("Not Enough Funds.\n");
+                }
             case 'a':
-
+                if (player.gold >= armorPrice){
+                    player.gold -= armorPrice;
+                    printf("-%d gold\n", armorPrice);
+                    printf("+2 max HP\n");
+                    player.maxHealth += 2;
+                } else {
+                    printf("Not Enough Funds.\n");
+                }
             case 'w':
-
+                if (player.gold >= weaponPrice){
+                    player.gold -= weaponPrice;
+                    printf("-%d gold\n", weaponPrice);
+                    printf("+2 combat bonus HP\n");
+                    player.combatBonus += 2;
+                } else {
+                    printf("Not Enough Funds.\n");
+                }
             default:
                 printf("Item not recognized. Try again.\n");
                 continue;
         }
+
+        printf("Would you like to keep shoping?");
+        printf("[y]es please! or [n]o, I'm broke :( --> ");
+        scanf(" %c", &choice);
+        if (choice == 'n'){
+            keepShoping = 0;
+        }
     }
+    return player;
 }
 
 /* generates stats of the monster based on floorLevel */
