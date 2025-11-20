@@ -23,6 +23,7 @@ void initFloors(map* levels[]){
     char temp1[2][3] = {{' ','m','g'},
                        {' ',' ','d'}};
     fillFloor(levels,0,3,2,temp1);
+    printMap(levels[0]);
 
     levels[1] = createFloor(3,3);
     char temp2[3][3] = {{' ','i','d'},
@@ -30,6 +31,7 @@ void initFloors(map* levels[]){
                   {' ',' ','g'}};
 
     fillFloor(levels,1,3,3,temp2);
+    printMap(levels[1]);
 }
 
 //fills the floor with attributes of given 2D array
@@ -47,4 +49,13 @@ void freeFloor(map* map){
     }
     free(map->floor);
     free(map);
+}
+
+void printMap(map* map){
+    for(int i = 0; i < map->row; i++){
+        for(int j = 0; j < map->col; j++){
+            printf("[%c] ",map->floor[i][j]);
+        }
+        printf("\n");
+    }
 }

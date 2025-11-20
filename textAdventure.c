@@ -35,10 +35,6 @@ int combatNumber(int combatBonus);
 int goldPickUp(int floorLevel);
 character moveCharacter(char direction, map* floorMap, character player);
 
-map* createFloor(int row, int col);
-void initFloors(map* levels[]);
-void fillFloor(map* levels[], int floorNum,int col, char temp[][col]);
-void freeFloor(map* map);
 
 
 
@@ -80,6 +76,7 @@ int main(){
 
 
     while (player.health > 0){
+        printf("\ncurrent position: %d %d\n",player.row,player.col);
         printDirections(player.row, player.col,levels[floorLevel-1]);
         scanf(" %c", &choice);
         player = moveCharacter(choice,levels[floorLevel-1],player);
@@ -151,30 +148,35 @@ int main(){
 void printDirections(int row, int col, map* floorStruct){
     //find the max row and column index for a specific floor level
     int max_row, max_col;
-    max_row = floorStruct->row;
-    max_col = floorStruct->col;
+    max_row = floorStruct->row - 1;
+    max_col = floorStruct->col -1;
+    printf("max row: %d\n",max_row);
+    printf("max col: %d\n", max_col);
 
     //print possible directions
     printf("what would you like to do?\n");
-    if (row != 0){
+    if (row > 0){
         printf("go north[w] ");
     }
-    if (col != max_row){
+    if (col < max_col){
         printf("go east[d] ");
     }
-    if (row != max_col){
+    if (row < max_row){
         printf("go south[s] ");
     }
-    if (col != 0){
+    if (col > 0){
         printf("go west[a]");
+    }
+    if (row < 0 || row > max_row || col < 0 || col > max_col){
+        printf("OUT OF BOUNDS\n");
     }
 }
 
 
 //moves the player in the chosen direction
 character moveCharacter(char direction, map* floorStructPtr, character player){
-    int maxRow = floorStructPtr->row;
-    int maxCol = floorStructPtr->col;
+    int maxRow = floorStructPtr->row - 1;
+    int maxCol = floorStructPtr->col - 1;
 
     if(floorStructPtr->floor[player.row][player.col] == '\0'){
         printf("ERROR, NULL\n");
@@ -217,9 +219,10 @@ character moveCharacter(char direction, map* floorStructPtr, character player){
         break;
     case 'a':
         while(player.col > 0){
+            player.col--;
             switch(floorStructPtr->floor[player.row][player.col]){
                 case ' ':
-                    player.col--;
+                    continue;
                     break;
                 case 'g':
                     player.event = 'g';
@@ -249,10 +252,10 @@ character moveCharacter(char direction, map* floorStructPtr, character player){
 
     case 's':
         while(player.row < maxRow){
+            player.row++;
             switch(floorStructPtr->floor[player.row][player.col]){
-                
                 case ' ':
-                    player.row++;
+                    continue;
                     break;
                 case 'g':
                     player.event = 'g';
