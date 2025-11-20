@@ -22,11 +22,6 @@ typedef struct {
     int combatBonus;
 } monster;
 
-// typedef struct {
-//     int row;
-//     int col;
-//     char** floor; //pointer to array of pointers to arrays of chars, first * is to a row and second * is to a column 
-// } map;
 
 
 
@@ -85,9 +80,9 @@ int main(){
 
 
     while (player.health > 0){
-        printDirections(player.row, player.col,levels[floorLevel]);
-        scanf("%c", choice);
-        player = moveCharacter(choice,levels[floorLevel],player);
+        printDirections(player.row, player.col,levels[floorLevel-1]);
+        scanf(" %c", &choice);
+        player = moveCharacter(choice,levels[floorLevel-1],player);
         
 
         /* I think we need to figure out something else for the maps...like make their own function???*/ 
@@ -101,7 +96,7 @@ int main(){
                 printf("You find a set of stairs going down.\n");
                 printf("Would you like to decsend?\n");
                 printf("[y]es or [n]o --> ");
-                scanf("%c", &choice);
+                scanf(" %c", &choice);
 
                 if (choice == 'y'){
                     floorLevel--;
@@ -110,7 +105,7 @@ int main(){
             case 'g':
                 printf("You found gold! Pick it up?\n");
                 printf("[y]es or [n]o --> ");
-                scanf("%c", &choice);
+                scanf(" %c", &choice);
 
                 if (choice == 'y'){
                     player.gold += goldPickUp(floorLevel);
@@ -122,7 +117,7 @@ int main(){
             case 'm':
                 printf("You run into a monster!\n");
                 printf("[f]ight or [r]un?");
-                scanf("%c", choice);
+                scanf(" %c", &choice);
 
                 if (choice =='f'){
                     generateMonster(badGuy, floorLevel);
@@ -136,6 +131,7 @@ int main(){
             case 'v':
                 /* same here? */
             default:
+                printf("nothing here\n");
                 continue;
         }
 
@@ -179,14 +175,20 @@ void printDirections(int row, int col, map* floorStruct){
 character moveCharacter(char direction, map* floorStructPtr, character player){
     int maxRow = floorStructPtr->row;
     int maxCol = floorStructPtr->col;
+
+    if(floorStructPtr->floor[player.row][player.col] == '\0'){
+        printf("ERROR, NULL\n");
+        return player;
+    }
     
     switch (direction)
     {
     case 'w':
-        while(player.row >= 0){
+        while(player.row > 0){
+            player.row--;
             switch(floorStructPtr->floor[player.row][player.col]){
                 case ' ':
-                    player.row--;
+                    continue;
                     break;
                 case 'g':
                     player.event = 'g';
@@ -209,12 +211,12 @@ character moveCharacter(char direction, map* floorStructPtr, character player){
                     return player;
                     break;
                 default:
-                    printf("Oh oh");
+                    printf("Oh oh - w - '%c'\n",floorStructPtr->floor[player.row][player.col]);
             }
         }
         break;
     case 'a':
-        while(player.col >= 0){
+        while(player.col > 0){
             switch(floorStructPtr->floor[player.row][player.col]){
                 case ' ':
                     player.col--;
@@ -240,13 +242,15 @@ character moveCharacter(char direction, map* floorStructPtr, character player){
                     return player;
                     break;
                 default:
-                    printf("Oh oh");
+                    printf("Oh oh - a - '%c'\n",floorStructPtr->floor[player.row][player.col]);
             }
         }
+        break;
 
     case 's':
         while(player.row < maxRow){
             switch(floorStructPtr->floor[player.row][player.col]){
+                
                 case ' ':
                     player.row++;
                     break;
@@ -271,15 +275,17 @@ character moveCharacter(char direction, map* floorStructPtr, character player){
                     return player;
                     break;
                 default:
-                    printf("Oh oh");
+                    printf("Oh oh - s - '%c'\n",floorStructPtr->floor[player.row][player.col]);
             }
         }
+        break;
 
     case 'd':
         while(player.col < maxCol){
+            player.col++;
             switch(floorStructPtr->floor[player.row][player.col]){
                 case ' ':
-                    player.col++;
+                    continue;
                     break;
                 case 'g':
                     player.event = 'g';
@@ -302,9 +308,10 @@ character moveCharacter(char direction, map* floorStructPtr, character player){
                     return player;
                     break;
                 default:
-                    printf("Oh oh");
+                    printf("Oh oh - d - '%c'\n",floorStructPtr->floor[player.row][player.col]);
             }
         }
+        break;
 
     
     default:
@@ -338,7 +345,7 @@ void printCombat(monster badGuy, character player){
     //prompt user to attack
     printf("The monster snarls its sharp teeth at you...\n");
     printf("Enter any key to attack --> \n");
-    scanf("%c",attack);
+    scanf(" %c",&attack);
 
     //Player attacks
     playerDamage = combatNumber(player.combatBonus);
@@ -355,7 +362,7 @@ void printCombat(monster badGuy, character player){
 
         //prompt player to attack
         printf("Enter any key to attack --> \n");
-        scanf("%c",attack);
+        scanf(" %c",&attack);
 
         //player attacks
         playerDamage = combatNumber(player.combatBonus);
@@ -377,47 +384,3 @@ int combatNumber(int combatBonus){
     return combatNumber;
 }
 
-// //creates space in memory needed for each floor depending on num of rows and colms and returns a pointer to it
-// map* createFloor(int row, int col){
-//     map* map1 = (map*)malloc(sizeof(map));
-//     map1 -> row = row;
-//     map1 -> col = col;
-
-//     map1->floor = malloc(row*sizeof(char*));
-//     for(int i = 0; i < row; i++){
-//         map1->floor[i] = malloc(col * sizeof(char));
-//     }
-//     return map1;
-// }
-
-// //initialization of floors
-// void initFloors(map* levels[]){
-//     levels[0] = createFloor(2,3);
-//     char temp1[2][3] = {{' ','m','g'},
-//                        {' ',' ','d'}};
-//     fillFloor(levels,0,3,temp1);
-
-//     levels[1] = createFloor(3,3);
-//     char temp2[3][3] = {{' ','i','d'},
-//                   {'u','m',' '},
-//                   {' ',' ','g'}};
-
-//     fillFloor(levels,1,3,temp2);
-// }
-
-// //fills the floor with attributes of given 2D array
-// void fillFloor(map* levels[], int floorNum,int col, char temp[][col]){
-//     for (int r = 0; r < levels[floorNum]->row; r++){
-//         for(int c = 0; c < levels[floorNum]->col; c++){
-//             levels[floorNum]->floor[r][c] = temp[r][c];
-//         }
-//     }
-// }
-// //frees the memory in one floor
-// void freeFloor(map* map){
-//     for(int i = 0; i < map->row; i++){
-//         free(map->floor[i]);
-//     }
-//     free(map->floor);
-//     free(map);
-// }
