@@ -404,6 +404,7 @@ character itemPickUp(character player){
             printf("Its a healing potion!\n");
             printf("+%d health",player.maxHealth);
             player.health = player.maxHealth;
+            break;
 
         default:
             printf("You reach to grab it...but theres nothing there.\n");
