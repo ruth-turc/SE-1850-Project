@@ -193,8 +193,8 @@ void printDirections(int row, int col, map* floorStruct){
 
     max_row = floorStruct->row - 1;
     max_col = floorStruct->col -1;
-    printf("max row: %d\n",max_row);
-    printf("max col: %d\n", max_col);
+    // printf("max row: %d\n",max_row);
+    // printf("max col: %d\n", max_col);
 
     //print possible directions
     printf("what would you like to do?\n");
@@ -513,3 +513,4 @@ int combatNumber(int combatBonus){
 
     return combatNumber;
 
+}
