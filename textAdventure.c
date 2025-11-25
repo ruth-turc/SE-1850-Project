@@ -24,12 +24,6 @@ typedef struct {
     int combatBonus;
 } monster;
 
-// typedef struct {
-//     int row;
-//     int col;
-//     char** floor; //pointer to array of pointers to arrays of chars, first * is to a row and second * is to a column 
-// } map;
-
 
 
 /* PROTOTYPES */
