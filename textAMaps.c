@@ -27,8 +27,8 @@ void initFloors(map* levels[]){
 
     levels[1] = createFloor(3,3);
     char temp2[3][3] = {{' ','i','d'},
-                  {'u','m',' '},
-                  {' ',' ','g'}};
+                       {' ','m','u'},
+                       {' ',' ','g'}};
 
     fillFloor(levels,1,3,3,temp2);
     printMap(levels[1]);
