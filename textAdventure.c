@@ -3,20 +3,11 @@
 #include <ctype.h>
 #include <time.h>
 #include "textAMaps.h"
+#include "textAMove.h"
 
 #define NUM_FLOORS 2
 
-/* structure to represent player */
-typedef struct {
-    int health;
-    int maxHealth;
-    int gold;
-    int combatBonus;
 
-    int row;
-    int col;
-    char event;
-} character;
 
 typedef struct {
     int health;
@@ -24,7 +15,6 @@ typedef struct {
 } monster;
 
 /* PROTOTYPES */
-void printDirections(int row, int col, map* floorStruct);
 
 monster generateMonster(monster badGuy, int floorLevel);
 character printCombat(monster badGuy, character player);
@@ -34,12 +24,8 @@ int goldPickUp(int floorLevel);
 character itemPickUp(character player);
 character shop(character player, int floorLevel);
 
-character moveCharacter(char direction, map* floorMap, character player);
 
-map* createFloor(int row, int col);
-void initFloors(map* levels[]);
-void fillFloor(map* levels[], int floorNum,int col, char temp[][col]);
-void freeFloor(map* map);
+
 
 int main(){
     /*create character structure called player, assign health, 
