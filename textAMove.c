@@ -53,8 +53,15 @@ character moveCharacter(char direction, map* floorStructPtr, character player){
             if(tile == ' '){
                 continue;
             }
-            else if(tile == 'g' || tile == 'i' || tile == 'm' || tile == 'd' || tile == 'u' || tile == 'v'){
+            else if(tile == 'g' || tile == 'i' || tile == 'm'){
                 player.event = tile;
+                floorStructPtr->floor[player.row][player.col] = ' ';
+                return player;
+                break;
+            }
+            else if(tile == 'd' || tile == 'u' || tile == 'v'){
+                player.event = tile;
+                return player;
                 break;
             }
             else{
@@ -70,8 +77,15 @@ character moveCharacter(char direction, map* floorStructPtr, character player){
             if(tile == ' '){
                 continue;
             }
-            else if(tile == 'g' || tile == 'i' || tile == 'm' || tile == 'd' || tile == 'u' || tile == 'v'){
+            else if(tile == 'g' || tile == 'i' || tile == 'm'){
                 player.event = tile;
+                floorStructPtr->floor[player.row][player.col] = ' ';
+                return player;
+                break;
+            }
+            else if(tile == 'd' || tile == 'u' || tile == 'v'){
+                player.event = tile;
+                return player;
                 break;
             }
             else{
@@ -87,8 +101,15 @@ character moveCharacter(char direction, map* floorStructPtr, character player){
             if(tile == ' '){
                 continue;
             }
-            else if(tile == 'g' || tile == 'i' || tile == 'm' || tile == 'd' || tile == 'u' || tile == 'v'){
+            else if(tile == 'g' || tile == 'i' || tile == 'm'){
                 player.event = tile;
+                floorStructPtr->floor[player.row][player.col] = ' ';
+                return player;
+                break;
+            }
+            else if(tile == 'd' || tile == 'u' || tile == 'v'){
+                player.event = tile;
+                return player;
                 break;
             }
             else{
@@ -104,8 +125,15 @@ character moveCharacter(char direction, map* floorStructPtr, character player){
             if(tile == ' '){
                 continue;
             }
-            else if(tile == 'g' || tile == 'i' || tile == 'm' || tile == 'd' || tile == 'u' || tile == 'v'){
+            else if(tile == 'g' || tile == 'i' || tile == 'm'){
                 player.event = tile;
+                floorStructPtr->floor[player.row][player.col] = ' ';
+                return player;
+                break;
+            }
+            else if(tile == 'd' || tile == 'u' || tile == 'v'){
+                player.event = tile;
+                return player;
                 break;
             }
             else{

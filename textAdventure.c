@@ -21,7 +21,7 @@ int main(){
     //definition of array of pointers to sctructs for each floor
     map* levels[NUM_FLOORS];
 
-    initFloors(levels);
+    initFloors(levels); //initialize floors
     
 
     //initialize player location on floor1
@@ -41,7 +41,7 @@ int main(){
 
         printf("\ncurrent position: %d %d\n",player.row,player.col);
         printf("current HP: %d\n", player.health);
-        printf("current level: %d\n",floorLevel);
+        printf("current level: -%d\n",floorLevel);
         
         printDirections(player.row, player.col,levels[floorLevel-1]);
         scanf(" %c", &choice);
@@ -56,7 +56,13 @@ int main(){
                 printf("Would you like to ascend?\n");
                 printf("[y]es or [n]o? --> ");
                 scanf(" %c",&choice);
-
+                
+                while(choice != 'y' && choice != 'n'){
+                    printf("not one of the options!\n");
+                    printf("Would you like to ascend?\n");
+                    printf("[y]es or [n]o --> ");
+                    scanf(" %c", &choice);
+                }
                 if (choice == 'y'){
                     floorLevel--;
                 }
@@ -67,14 +73,28 @@ int main(){
                 printf("[y]es or [n]o --> ");
                 scanf(" %c", &choice);
 
+                while(choice != 'y' && choice != 'n'){
+                    printf("not one of the options!\n");
+                    printf("Would you like to decsend?\n");
+                    printf("[y]es or [n]o --> ");
+                    scanf(" %c", &choice);
+                }
                 if (choice == 'y'){
                     floorLevel++;
-                }
+                    }
+                
+                
                 break;
             case 'g': //GOLD!
                 printf("You found gold! Pick it up?\n");
                 printf("[y]es or [n]o --> ");
                 scanf(" %c", &choice);
+                
+                while(choice != 'y' && choice != 'n'){
+                    printf("not one of the options!\n");
+                    printf("[y]es or [n]o --> ");
+                    scanf(" %c", &choice);
+                }
 
                 if (choice == 'y'){
                     player.gold += goldPickUp(floorLevel);
@@ -88,6 +108,12 @@ int main(){
                 printf("[f]ight or [r]un? --> ");
                 scanf(" %c", &choice);
 
+                while(choice != 'f' && choice != 'r'){
+                    printf("not one of the options!\n");
+                    printf("[f]ight or [r]un? --> ");
+                    scanf(" %c", &choice);
+                }
+
                 if (choice =='f'){
                     badGuy = generateMonster(badGuy, floorLevel);
                     player = printCombat(badGuy, player);
@@ -100,6 +126,12 @@ int main(){
                 printf("Pick it up?\n");
                 printf("[y]es or [n]o? --> ");
                 scanf(" %c", &choice);
+                
+                while(choice != 'y' && choice != 'n'){
+                    printf("not one of the options!\n");
+                    printf("[y]es or [n]o --> ");
+                    scanf(" %c", &choice);
+                }
 
                 if (choice == 'y'){
                     player = itemPickUp(player);
@@ -113,6 +145,12 @@ int main(){
                 printf("[y]es or [n]o --> \n");
                 scanf(" %c", &choice);
 
+                while(choice != 'y' && choice != 'n'){
+                    printf("not one of the options!\n");
+                    printf("[y]es or [n]o --> ");
+                    scanf(" %c", &choice);
+                }
+
                 if (choice == 'y'){
                     player = shop(player,floorLevel);
                 } else if (choice == 'n'){
@@ -121,7 +159,7 @@ int main(){
                 printf("\n");
                 break;
             default:
-                printf("nothing here\n");
+                printf("just a wall\n");
                 continue;
         }
 
