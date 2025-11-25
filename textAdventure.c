@@ -60,6 +60,7 @@ int main(){
 
 
         printf("\ncurrent position: %d %d\n",player.row,player.col);
+        printf("current level: %d\n",floorLevel);
         printDirections(player.row, player.col,levels[floorLevel-1]);
         scanf(" %c", &choice);
         player = moveCharacter(choice,levels[floorLevel-1],player);
@@ -137,6 +138,7 @@ int main(){
                 printf("\n");
                 break;
             default:
+                printf("nothing here\n");
                 continue;
         }
 
