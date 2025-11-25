@@ -10,9 +10,6 @@
 
 #define NUM_FLOORS 2
 
-
-
-
 int main(){
     /*create character structure called player, assign health, 
         and start with combat bonus of 1 */
@@ -42,12 +39,12 @@ int main(){
     //game loop!
     while (player.health > 0){
 
-
-
-
         printf("\ncurrent position: %d %d\n",player.row,player.col);
+        printf("current HP: %d\n", player.health);
+        
         printDirections(player.row, player.col,levels[floorLevel-1]);
         scanf(" %c", &choice);
+
         player = moveCharacter(choice,levels[floorLevel-1],player);
         printf("\n");
 
