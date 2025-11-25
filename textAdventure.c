@@ -3,31 +3,18 @@
 #include <ctype.h>
 #include <time.h>
 #include "textAMaps.h"
+#include "textAMove.h"
 
 #define NUM_FLOORS 2
 
 
-/* structure to represent player */
-typedef struct {
-    int health;
-    int maxHealth;
-    int gold;
-    int combatBonus;
-
-    int row;
-    int col;
-    char event;
-} character;
 
 typedef struct {
     int health;
     int combatBonus;
 } monster;
 
-
-
 /* PROTOTYPES */
-void printDirections(int row, int col, map* floorStruct);
 
 monster generateMonster(monster badGuy, int floorLevel);
 character printCombat(monster badGuy, character player);
@@ -37,12 +24,8 @@ int goldPickUp(int floorLevel);
 character itemPickUp(character player);
 character shop(character player, int floorLevel);
 
-character moveCharacter(char direction, map* floorMap, character player);
 
-map* createFloor(int row, int col);
-void initFloors(map* levels[]);
-void fillFloor(map* levels[], int floorNum,int col, char temp[][col]);
-void freeFloor(map* map);
+
 
 int main(){
     /*create character structure called player, assign health, 
@@ -72,9 +55,12 @@ int main(){
 
     //game loop!
     while (player.health > 0){
-        printf("YOUR HP: %d\n",player.health);
 
-        printDirections(player.row, player.col, levels[floorLevel-1]);
+
+
+
+        printf("\ncurrent position: %d %d\n",player.row,player.col);
+        printDirections(player.row, player.col,levels[floorLevel-1]);
         scanf(" %c", &choice);
         player = moveCharacter(choice,levels[floorLevel-1],player);
         printf("\n");
@@ -149,6 +135,7 @@ int main(){
                     printf("You walk away.\n");
                 }
                 printf("\n");
+                break;
             default:
                 continue;
         }
@@ -167,171 +154,7 @@ int main(){
 
 /* FUNCTIONS!!!*/
 
-void printDirections(int row, int col, map* floorStruct){
-    //find the max row and column index for a specific floor level
-    int max_row, max_col;
-    max_row = floorStruct->row;
-    max_col = floorStruct->col;
 
-    //print possible directions
-    printf("what would you like to do?\n");
-    if (row != 0){
-        printf("go north[w] ");
-    }
-    if (col != max_row){
-        printf("go east[d] ");
-    }
-    if (row != max_col){
-        printf("go south[s] ");
-    }
-    if (col != 0){
-        printf("go west[a]");
-    }
-}
-
-//moves the player in the chosen direction
-character moveCharacter(char direction, map* floorStructPtr, character player){
-    int maxRow = floorStructPtr->row;
-    int maxCol = floorStructPtr->col;
-    
-    switch (direction)
-    {
-    case 'w':
-        while(player.row > 0){
-            switch(floorStructPtr->floor[player.row][player.col]){
-                case ' ':
-                    player.row--;
-                    break;
-                case 'g':
-                    player.event = 'g';
-                    return player;
-                    break; 
-                case 'i':
-                    player.event = 'i';
-                    return player;
-                    break;
-                case 'm':
-                    player.event = 'm';
-                    return player;
-                    break;
-                case 'd':
-                    player.event = 'd';
-                    return player;
-                    break;
-                case 'u':
-                    player.event = 'u';
-                    return player;
-                    break;
-                default:
-                    printf("w");
-            }
-        }
-        break;
-
-    case 'a':
-        while(player.col > 0){
-            switch(floorStructPtr->floor[player.row][player.col]){
-                case ' ':
-                    player.col--;
-                    break;
-                case 'g':
-                    player.event = 'g';
-                    return player;
-                    break; 
-                case 'i':
-                    player.event = 'i';
-                    return player;
-                    break;
-                case 'm':
-                    player.event = 'm';
-                    return player;
-                    break;
-                case 'd':
-                    player.event = 'd';
-                    return player;
-                    break;
-                case 'u':
-                    player.event = 'u';
-                    return player;
-                    break;
-                default:
-                    printf("a");
-            }
-        }
-        break;
-
-    case 's':
-        while(player.row < maxRow){
-            printf("%c\n",floorStructPtr->floor[player.row][player.col]);
-            switch(floorStructPtr->floor[player.row][player.col]){
-                case ' ':
-                    player.row++;
-                    break;
-                case 'g':
-                    player.event = 'g';
-                    return player;
-                    break; 
-                case 'i':
-                    player.event = 'i';
-                    return player;
-                    break;
-                case 'm':
-                    player.event = 'm';
-                    return player;
-                    break;
-                case 'd':
-                    player.event = 'd';
-                    return player;
-                    break;
-                case 'u':
-                    player.event = 'u';
-                    return player;
-                    break;
-                default:
-                    printf("s");
-            }
-        }
-        break;
-
-    case 'd':
-        while(player.col < maxCol){
-            switch(floorStructPtr->floor[player.row][player.col]){
-                case ' ':
-                    player.col++;
-                    break;
-                case 'g':
-                    player.event = 'g';
-                    return player;
-                    break; 
-                case 'i':
-                    player.event = 'i';
-                    return player;
-                    break;
-                case 'm':
-                    player.event = 'm';
-                    return player;
-                    break;
-                case 'd':
-                    player.event = 'd';
-                    return player;
-                    break;
-                case 'u':
-                    player.event = 'u';
-                    return player;
-                    break;
-                default:
-                   printf("d");
-            }
-        }
-        break;
-
-    
-    default:
-        printf("Wrong Input!\n");
-        break;
-    }
-    return player;
-}
 
 /*returns the amount of gold the player picks up
     based on floorLevel*/

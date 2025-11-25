@@ -9,7 +9,8 @@ typedef struct {
 
 map* createFloor(int row, int col);
 void initFloors(map* levels[]);
-void fillFloor(map* levels[], int floorNum,int col, char temp[][col]);
+void fillFloor(map* levels[], int floorNum,int col, int row, char temp[][col]);
 void freeFloor(map* map);
+void printMap(map* map);
 
 #endif 
