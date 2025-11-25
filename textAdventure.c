@@ -6,7 +6,6 @@
 
 #define NUM_FLOORS 2
 
-
 /* structure to represent player */
 typedef struct {
     int health;
@@ -24,10 +23,6 @@ typedef struct {
     int combatBonus;
 } monster;
 
-
-
-
-
 /* PROTOTYPES */
 void printDirections(int row, int col, map* floorStruct);
 
@@ -41,13 +36,15 @@ character shop(character player, int floorLevel);
 
 character moveCharacter(char direction, map* floorMap, character player);
 
-
+map* createFloor(int row, int col);
+void initFloors(map* levels[]);
+void fillFloor(map* levels[], int floorNum,int col, char temp[][col]);
+void freeFloor(map* map);
 
 int main(){
     /*create character structure called player, assign health, 
         and start with combat bonus of 1 */
     character player;
-
     player.health = 10;
     player.maxHealth = 10;
     player.combatBonus = 1;
@@ -80,14 +77,12 @@ int main(){
         printDirections(player.row, player.col,levels[floorLevel-1]);
         scanf(" %c", &choice);
         player = moveCharacter(choice,levels[floorLevel-1],player);
-        
+        printf("\n");
 
         switch (player.event){
-
             case 'u': //stairs going up
                 printf("You find a set of stairs going up.\n");
                 printf("You've been here before.\n");
-
                 printf("Would you like to ascend?\n");
                 printf("[y]es or [n]o? --> ");
                 scanf(" %c",&choice);
@@ -96,24 +91,19 @@ int main(){
                     floorLevel--;
                 }
                 break;
-
             case 'd': //stairs going down
                 printf("You find a set of stairs going down.\n");
                 printf("Would you like to decsend?\n");
                 printf("[y]es or [n]o --> ");
-
                 scanf(" %c", &choice);
 
                 if (choice == 'y'){
-
                     floorLevel++;
                 }
                 break;
-
             case 'g': //GOLD!
                 printf("You found gold! Pick it up?\n");
                 printf("[y]es or [n]o --> ");
-
                 scanf(" %c", &choice);
 
                 if (choice == 'y'){
@@ -123,26 +113,18 @@ int main(){
                     printf("You leave the gold.\n");
                 }
                 break;
-
             case 'm': //monster
                 printf("You run into a monster!\n");
-
                 printf("[f]ight or [r]un? --> ");
                 scanf(" %c", &choice);
 
                 if (choice =='f'){
-                   
                     badGuy = generateMonster(badGuy, floorLevel);
                     player = printCombat(badGuy, player);
                 } else if (choice =='r'){
-
                     printf("coward.\n\n");
                 }
                 break;
-
-
-
-
             case 'i': //item
                 printf("It may be dark, but you think you see something on the ground...\n");
                 printf("Pick it up?\n");
@@ -169,7 +151,6 @@ int main(){
                 printf("\n");
                 break;
             default:
-                printf("nothing here\n");
                 continue;
         }
 
@@ -218,7 +199,6 @@ character itemPickUp(character player){
             printf("Its a healing potion!\n");
             printf("+%d health",player.maxHealth);
             player.health = player.maxHealth;
-            break;
 
         default:
             printf("You reach to grab it...but theres nothing there.\n");
@@ -244,30 +224,58 @@ character shop(character player, int floorLevel){
     while (keepShoping){
         printf("What would you like to buy? \n");
         printf("[h]ealing potion, [a]rmor upgrade, [w]eapon upgrade --> ");
-        scanf("%c", &choice);
+        scanf(" %c", &choice);
+
         switch (choice){
             case 'h':
-                
+                if (player.gold >= healPrice){
+                    player.gold -= healPrice;
+                    printf("-%d gold\n", healPrice);
+                    printf("+%d HP\n", player.maxHealth);
+                    player.health = player.maxHealth;
+                } else {
+                    printf("Not Enough Funds.\n");
+                }
             case 'a':
-
+                if (player.gold >= armorPrice){
+                    player.gold -= armorPrice;
+                    printf("-%d gold\n", armorPrice);
+                    printf("+2 max HP\n");
+                    player.maxHealth += 2;
+                } else {
+                    printf("Not Enough Funds.\n");
+                }
             case 'w':
-
+                if (player.gold >= weaponPrice){
+                    player.gold -= weaponPrice;
+                    printf("-%d gold\n", weaponPrice);
+                    printf("+2 combat bonus HP\n");
+                    player.combatBonus += 2;
+                } else {
+                    printf("Not Enough Funds.\n");
+                }
             default:
                 printf("Item not recognized. Try again.\n");
                 continue;
         }
+
+        printf("Would you like to keep shoping?");
+        printf("[y]es please! or [n]o, I'm broke :( --> ");
+        scanf(" %c", &choice);
+        if (choice == 'n'){
+            keepShoping = 0;
+        }
     }
+    return player;
 }
 
 /* generates stats of the monster based on floorLevel */
 monster generateMonster(monster badGuy, int floorLevel){
-
     badGuy.health = floorLevel*3;
     badGuy.combatBonus = floorLevel;
 
     return badGuy;
 }
-
 
 //print and execute combat
 character printCombat(monster badGuy, character player){
@@ -277,18 +285,16 @@ character printCombat(monster badGuy, character player){
     char attack;
 
     //prompt user to attack
-    printf("Enter any key to attack --> \n");
+    printf("Enter any key to attack --> ");
     scanf(" %c",&attack);
 
     //Player attacks
     playerDamage = combatNumber(player.combatBonus);
-
     badGuy.health = badGuy.health -  playerDamage;
     printf("You delt %d damage!\n", playerDamage);
     printf("\n");
 
     //while the player is still alive and the monster is still alive
-
     while (badGuy.health >= 0){
 
         //moster attacks
@@ -303,7 +309,6 @@ character printCombat(monster badGuy, character player){
         }
 
         //prompt player to attack
-        
         printf("Enter any key to attack --> ");
         scanf(" %c",&attack);
 
@@ -327,5 +332,4 @@ int combatNumber(int combatBonus){
     combatNumber += combatBonus;
 
     return combatNumber;
-
 }
