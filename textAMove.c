@@ -144,7 +144,7 @@ character moveCharacter(char direction, map* floorStructPtr, character player){
 
     
     default:
-        printf("Wrong Input!\n");
+        printf("Error in move char\n");
         break;
     }
     if(floorStructPtr->floor[player.row][player.col]== ' '){

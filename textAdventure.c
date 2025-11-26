@@ -8,7 +8,7 @@
 #include "textACombat.h"
 #include "textAEvents.h"
 
-#define NUM_FLOORS 2
+#define NUM_FLOORS 3
 
 int main(){
     /*create character structure called player, assign health, 
@@ -45,6 +45,12 @@ int main(){
         
         printDirections(player.row, player.col,levels[floorLevel-1]);
         scanf(" %c", &choice);
+
+        while(choice != 'w' && choice != 'a' && choice != 's' && choice != 'd'){
+            printf("Wrong Input!\n");
+            printDirections(player.row, player.col,levels[floorLevel-1]);
+            scanf(" %c", &choice);
+        }
 
         player = moveCharacter(choice,levels[floorLevel-1],player);
         printf("\n");

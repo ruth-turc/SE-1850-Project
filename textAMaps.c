@@ -32,6 +32,15 @@ void initFloors(map* levels[]){
 
     fillFloor(levels,1,3,3,temp2);
     printMap(levels[1]);
+
+    levels[2] = createFloor(5,4);
+    char temp3[5][4] = {{' ','v','u','g'},
+                       {'m',' ',' ',' '},
+                       {' ','m','i',' '},
+                       {' ',' ',' ','m'},
+                       {'g',' ','d',' '}};
+    fillFloor(levels,2,4,5,temp3);
+    printMap(levels[2]);
 }
 
 //fills the floor with attributes of given 2D array
@@ -58,4 +67,5 @@ void printMap(map* map){
         }
         printf("\n");
     }
+    printf("\n");
 }
