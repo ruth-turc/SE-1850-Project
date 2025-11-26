@@ -17,6 +17,7 @@ int main(){
     player.health = 10;
     player.maxHealth = 10;
     player.combatBonus = 1;
+    player.gold = 0;
 
     //definition of array of pointers to sctructs for each floor
     map* levels[NUM_FLOORS];
@@ -76,6 +77,7 @@ int main(){
                 }
                 if (choice == 'y'){
                     floorLevel--;
+                    player.event = 'd';
                 }
                 break;
             case 'd': //stairs going down
@@ -92,6 +94,7 @@ int main(){
                 }
                 if (choice == 'y'){
                     floorLevel++;
+                    player.event = 'u';
                     }
                 
                 
@@ -153,7 +156,7 @@ int main(){
             case 'v': //vender or merchant
                 printf("You run into a traveling merchant!\n");
                 printf("would you like to shop?\n");
-                printf("[y]es or [n]o --> \n");
+                printf("[y]es or [n]o --> ");
                 scanf(" %c", &choice);
 
                 while(choice != 'y' && choice != 'n'){

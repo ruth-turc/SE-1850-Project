@@ -30,7 +30,7 @@ character itemPickUp(character player){
 
         case 3: //healing potion
             printf("Its a healing potion!\n");
-            printf("+%d health",player.maxHealth);
+            printf("+%d health\n",player.maxHealth);
             player.health = player.maxHealth;
             break;
 
@@ -52,11 +52,12 @@ character shop(character player, int floorLevel){
     int keepShoping = 1;
     char choice;
 
-    printf("\t~~~SHOP~~~\n");
+    printf("\n\t~~~SHOP~~~\n");
+    printf("your gold: %d\n",player.gold);
     printf("Items Available: \n");
-    printf("Healing Potion (heal up to max HP): %d gold", healPrice);
-    printf("Armor Upgrade (increase max HP): %d gold", armorPrice);
-    printf("Weapon Upgrade (increase combat bonus): %d gold", weaponPrice);
+    printf("Healing Potion (heal up to max HP): %d gold\n", healPrice);
+    printf("Armor Upgrade (increase max HP): %d gold\n", armorPrice);
+    printf("Weapon Upgrade (increase combat bonus): %d gold\n", weaponPrice);
 
     while (keepShoping){
         printf("What would you like to buy? \n");
@@ -120,7 +121,7 @@ character monsterDrops(character player, int monsterHealth){
         case 1:
             printf("You find a healing potion!\n");
             printf("It must have been left by a previous explorer\n");
-            printf("+%d health",amountHealed);
+            printf("+%d health\n",amountHealed);
             player.health = player.maxHealth;
             break;
         case 2:
@@ -132,7 +133,7 @@ character monsterDrops(character player, int monsterHealth){
         case 3:
             printf("The monster was wearing a bit of armor.\n");
             printf("You could get better use out of it...the monsters can't use it if its dead.\n");
-            printf("+1 max health");
+            printf("+1 max health\n");
             player.maxHealth += 1;
             break;
         default:
