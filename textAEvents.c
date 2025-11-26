@@ -15,6 +15,7 @@ character itemPickUp(character player){
     srand(time(NULL));
     int itemChoice = (rand() % 4) + 1; //random number between 1-4
 
+    printf("\n");
     switch (itemChoice){
         case 1: //new weapon
             printf("Its a shiny new sword!!\n");
@@ -39,6 +40,7 @@ character itemPickUp(character player){
             printf("Your eyes must have decieved you.\n");
             break;
     }
+    printf("\n");
 
     return player;
 }
@@ -54,11 +56,11 @@ character shop(character player, int floorLevel){
 
     printf("\t~~~SHOP~~~\n");
     printf("Items Available: \n");
-    printf("Healing Potion (heal up to max HP): %d gold", healPrice);
-    printf("Armor Upgrade (increase max HP): %d gold", armorPrice);
-    printf("Weapon Upgrade (increase combat bonus): %d gold", weaponPrice);
+    printf("Healing Potion (heal up to max HP): %d gold\n", healPrice);
+    printf("Armor Upgrade (increase max HP): %d gold\n", armorPrice);
+    printf("Weapon Upgrade (increase combat bonus): %d gold\n\n", weaponPrice);
 
-    while (keepShoping){
+    while (keepShoping&&(player.gold >= 0)){
         printf("What would you like to buy? \n");
         printf("[h]ealing potion, [a]rmor upgrade, [w]eapon upgrade --> ");
         scanf(" %c", &choice);
@@ -66,7 +68,7 @@ character shop(character player, int floorLevel){
         switch (choice){
             case 'h':
                 if (player.gold >= healPrice){
-                    player.gold -= healPrice;
+                    player.gold = player.gold - healPrice;
                     printf("-%d gold\n", healPrice);
                     printf("+%d HP\n", player.maxHealth);
                     player.health = player.maxHealth;
@@ -76,7 +78,7 @@ character shop(character player, int floorLevel){
                 break;
             case 'a':
                 if (player.gold >= armorPrice){
-                    player.gold -= armorPrice;
+                    player.gold = player.gold - armorPrice;
                     printf("-%d gold\n", armorPrice);
                     printf("+2 max HP\n");
                     player.maxHealth += 2;
@@ -86,7 +88,7 @@ character shop(character player, int floorLevel){
                 break;
             case 'w':
                 if (player.gold >= weaponPrice){
-                    player.gold -= weaponPrice;
+                    player.gold = player.gold - weaponPrice;
                     printf("-%d gold\n", weaponPrice);
                     printf("+2 combat bonus HP\n");
                     player.combatBonus += 2;
@@ -100,27 +102,28 @@ character shop(character player, int floorLevel){
         }
 
         printf("Would you like to keep shoping?");
-        printf("[y]es please! or [n]o, I'm broke. --> ");
+        printf("[y]es or [n]o --> ");
         scanf(" %c", &choice);
         if (choice == 'n'){
             keepShoping = 0;
         }
+        printf("\n");
     }
     return player;
 }
 
-character monsterDrops(character player, int monsterHealth){
+character monsterDrops(character player, int floorLevel){
     srand(time(NULL));
     int lootFound = (rand() % 4) + 1;
 
-    int goldAmount = monsterHealth;
-    int amountHealed = player.maxHealth - player.health;
+    int goldAmount = floorLevel * 2;
     
+    printf("\n");
     switch (lootFound){
         case 1:
             printf("You find a healing potion!\n");
             printf("It must have been left by a previous explorer\n");
-            printf("+%d health",amountHealed);
+            printf("+%d health",player.maxHealth);
             player.health = player.maxHealth;
             break;
         case 2:
@@ -142,6 +145,6 @@ character monsterDrops(character player, int monsterHealth){
             break;
 
     }
-
+    printf("\n");
     return player;
 }

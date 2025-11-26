@@ -41,7 +41,7 @@ int main(){
 
         printf("\ncurrent position: %d %d\n",player.row,player.col);
         printf("current HP: %d\n", player.health);
-        printf("current level: -%d\n",floorLevel);
+        printf("current level: -%d\n\n",floorLevel);
 
         if (floorLevel == NUM_FLOORS){
             finalBoss(player);
@@ -127,7 +127,7 @@ int main(){
 
                 if (choice =='f'){
                     badGuy = generateMonster(badGuy, floorLevel);
-                    player = printCombat(badGuy, player);
+                    player = printCombat(badGuy, player, floorLevel);
                 } else if (choice =='r'){
                     printf("coward.\n\n");
                 }
@@ -153,7 +153,7 @@ int main(){
             case 'v': //vender or merchant
                 printf("You run into a traveling merchant!\n");
                 printf("would you like to shop?\n");
-                printf("[y]es or [n]o --> \n");
+                printf("[y]es or [n]o --> ");
                 scanf(" %c", &choice);
 
                 while(choice != 'y' && choice != 'n'){
