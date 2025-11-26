@@ -93,7 +93,7 @@ character finalBoss(character player){
     int monsterDamage;
     char attack;
 
-    printf("After stumbling through the dark dungeon, you finally reach the end...\n");
+    printf("\n\nAfter stumbling through the dark dungeon, you finally reach the end...\n");
     printf("Or so you thought...\n\n");
     printf("Something stands in your way of freedom...\n");
     printf("A dragon.\n\n");
@@ -134,6 +134,10 @@ character finalBoss(character player){
     if (dragon.health < 1){
         printf("\n~~~~~~ VICTORY! ~~~~~~\n");
         printf("You have defeated the dragon!\n\n");
-    }   
+    }   else if (player.health < 1){
+        printf("\n~~~~~~ DEATH ~~~~~~\n");
+        printf("You were so close...\n");
+        printf("Better luck next time :)\n");
+    }
 
 }

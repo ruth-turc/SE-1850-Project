@@ -8,7 +8,7 @@
 #include "textACombat.h"
 #include "textAEvents.h"
 
-#define NUM_FLOORS 3
+#define NUM_FLOORS 4
 
 int main(){
     /*create character structure called player, assign health, 
@@ -42,6 +42,11 @@ int main(){
         printf("\ncurrent position: %d %d\n",player.row,player.col);
         printf("current HP: %d\n", player.health);
         printf("current level: -%d\n",floorLevel);
+
+        if (floorLevel == NUM_FLOORS){
+            finalBoss(player);
+            break;
+        }
         
         printDirections(player.row, player.col,levels[floorLevel-1]);
         scanf(" %c", &choice);

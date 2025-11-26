@@ -41,6 +41,11 @@ void initFloors(map* levels[]){
                        {'g',' ','d',' '}};
     fillFloor(levels,2,4,5,temp3);
     printMap(levels[2]);
+
+    //final floor
+    levels[3] = createFloor(1,1);
+    char temp4[1][1] = {{' '}}; //only thing on final floor is boss fight
+    fillFloor(levels,3,1,1,temp4);
 }
 
 //fills the floor with attributes of given 2D array

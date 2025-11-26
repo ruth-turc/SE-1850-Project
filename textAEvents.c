@@ -73,6 +73,7 @@ character shop(character player, int floorLevel){
                 } else {
                     printf("Not Enough Funds.\n");
                 }
+                break;
             case 'a':
                 if (player.gold >= armorPrice){
                     player.gold -= armorPrice;
@@ -82,6 +83,7 @@ character shop(character player, int floorLevel){
                 } else {
                     printf("Not Enough Funds.\n");
                 }
+                break;
             case 'w':
                 if (player.gold >= weaponPrice){
                     player.gold -= weaponPrice;
@@ -91,9 +93,10 @@ character shop(character player, int floorLevel){
                 } else {
                     printf("Not Enough Funds.\n");
                 }
+                break;
             default:
                 printf("Item not recognized. Try again.\n");
-                continue;
+                break;
         }
 
         printf("Would you like to keep shoping?");
@@ -139,6 +142,6 @@ character monsterDrops(character player, int monsterHealth){
             break;
 
     }
-    
+
     return player;
 }
