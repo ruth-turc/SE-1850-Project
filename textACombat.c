@@ -18,6 +18,7 @@ character printCombat(monster badGuy, character player){
     int playerDamage;
     int monsterDamage;
     char attack;
+    char choice;
 
     //prompt user to attack
     printf("Enter any key to attack --> ");
@@ -56,15 +57,83 @@ character printCombat(monster badGuy, character player){
     
     if (badGuy.health < 1){
         printf("\n~~~~~~ VICTORY! ~~~~~~\n\n");
+        printf("loot the monster?\n");
+        printf("[y]es or [n]o --> ");
+        scanf(" %c", &choice);
+
+        while(choice != 'y' && choice != 'n'){
+            printf("not one of the options!\n");
+            printf("[y]es or [n]o --> ");
+            scanf(" %c", &choice);
+        }
+        if (choice == 'y'){
+            player = monsterDrops(player,badGuy.health);
+        } else {
+            printf("You leave the monster.\n");
+            printf("It looked too gross to touch anyway.\n");
+        }
     }   
 
     return player;
 }
 
+/* generates a random number for combat */
 int combatNumber(int combatBonus){
     srand(time(NULL));
     int combatNumber = (rand() % 6) + 1; //random number between 1-6
     combatNumber += combatBonus;
 
     return combatNumber;
+}
+
+/* prints and executes combat of the final boss, a dragon! */
+character finalBoss(character player){
+    monster dragon = generateMonster(dragon, 5);
+    int playerDamage;
+    int monsterDamage;
+    char attack;
+
+    printf("After stumbling through the dark dungeon, you finally reach the end...\n");
+    printf("Or so you thought...\n\n");
+    printf("Something stands in your way of freedom...\n");
+    printf("A dragon.\n\n");
+
+    printf("Press any key to attack --> ");
+    scanf(" %c",&attack);
+
+    //player attacks
+    playerDamage = combatNumber(player.combatBonus);
+    dragon.health = dragon.health -  playerDamage;
+    printf("You delt %d damage!\n", playerDamage);
+    printf("\n");
+
+    while (dragon.health >= 0){
+
+        //dragon attacks
+        printf("The dragon swings at you...\n");
+        monsterDamage = combatNumber(dragon.combatBonus);
+        player.health -= monsterDamage;
+        printf("The dragon hit you for %d damage!\n",monsterDamage);
+        printf("\n");
+
+        if (player.health < 1){
+            break; 
+        }
+
+        //prompt player to attack
+        printf("Enter any key to attack --> ");
+        scanf(" %c",&attack);
+
+        //player attacks
+        playerDamage = combatNumber(player.combatBonus);
+        dragon.health -= playerDamage;
+        printf("You delt %d damage!\n", playerDamage);
+        printf("\n");
+    }
+    
+    if (dragon.health < 1){
+        printf("\n~~~~~~ VICTORY! ~~~~~~\n");
+        printf("You have defeated the dragon!\n\n");
+    }   
+
 }

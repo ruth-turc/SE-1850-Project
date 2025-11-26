@@ -1,6 +1,7 @@
 #ifndef textACombat
 #define textACombat
 #include "textAMove.h"
+#include "textAEvents.h"
 
 
 typedef struct {
@@ -11,5 +12,6 @@ typedef struct {
 monster generateMonster(monster badGuy, int floorLevel);
 character printCombat(monster badGuy, character player);
 int combatNumber(int combatBonus);
+character finalBoss(character player);
 
 #endif

@@ -5,5 +5,6 @@
 int goldPickUp(int floorLevel);
 character itemPickUp(character player);
 character shop(character player, int floorLevel);
+character monsterDrops(character player, int floorLevel);
 
 #endif

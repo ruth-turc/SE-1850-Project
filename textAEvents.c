@@ -10,7 +10,7 @@ int goldPickUp(int floorLevel){
     return gold;
 }
 
-//pick up a randomized item
+/* pick up a randomized item */
 character itemPickUp(character player){
     srand(time(NULL));
     int itemChoice = (rand() % 4) + 1; //random number between 1-4
@@ -32,11 +32,15 @@ character itemPickUp(character player){
             printf("Its a healing potion!\n");
             printf("+%d health",player.maxHealth);
             player.health = player.maxHealth;
+            break;
 
         default:
             printf("You reach to grab it...but theres nothing there.\n");
             printf("Your eyes must have decieved you.\n");
+            break;
     }
+
+    return player;
 }
 
 /* generates a merchant selling items
@@ -93,11 +97,48 @@ character shop(character player, int floorLevel){
         }
 
         printf("Would you like to keep shoping?");
-        printf("[y]es please! or [n]o, I'm broke :( --> ");
+        printf("[y]es please! or [n]o, I'm broke. --> ");
         scanf(" %c", &choice);
         if (choice == 'n'){
             keepShoping = 0;
         }
     }
+    return player;
+}
+
+character monsterDrops(character player, int monsterHealth){
+    srand(time(NULL));
+    int lootFound = (rand() % 4) + 1;
+
+    int goldAmount = monsterHealth;
+    int amountHealed = player.maxHealth - player.health;
+    
+    switch (lootFound){
+        case 1:
+            printf("You find a healing potion!\n");
+            printf("It must have been left by a previous explorer\n");
+            printf("+%d health",amountHealed);
+            player.health = player.maxHealth;
+            break;
+        case 2:
+            printf("You find the weapon the monster was using.\n");
+            printf("It looks pretty beat up, but it is sharper than your sword.\n");
+            printf("+1 combat bonus!\n");
+            player.combatBonus += 1;
+            break;
+        case 3:
+            printf("The monster was wearing a bit of armor.\n");
+            printf("You could get better use out of it...the monsters can't use it if its dead.\n");
+            printf("+1 max health");
+            player.maxHealth += 1;
+            break;
+        default:
+            printf("You find gold!\n");
+            player.gold += goldAmount;
+            printf("+%d gold.\n",goldAmount);
+            break;
+
+    }
+    
     return player;
 }
