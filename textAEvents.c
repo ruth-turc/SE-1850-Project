@@ -53,13 +53,13 @@ character shop(character player, int floorLevel){
     char choice;
 
     printf("\n\t~~~SHOP~~~\n");
-    printf("your gold: %d\n",player.gold);
     printf("Items Available: \n");
     printf("Healing Potion (heal up to max HP): %d gold\n", healPrice);
     printf("Armor Upgrade (increase max HP): %d gold\n", armorPrice);
     printf("Weapon Upgrade (increase combat bonus): %d gold\n", weaponPrice);
 
     while (keepShoping){
+        printf("your gold: %d\n",player.gold);
         printf("What would you like to buy? \n");
         printf("[h]ealing potion, [a]rmor upgrade, [w]eapon upgrade --> ");
         scanf(" %c", &choice);
@@ -103,6 +103,11 @@ character shop(character player, int floorLevel){
         printf("Would you like to keep shoping?");
         printf("[y]es please! or [n]o, I'm broke. --> ");
         scanf(" %c", &choice);
+        while(choice != 'y' && choice != 'n'){
+            printf("not one of the options!\n");
+            printf("[y]es please! or [n]o, I'm broke. --> ");
+            scanf(" %c", &choice);
+        }
         if (choice == 'n'){
             keepShoping = 0;
         }

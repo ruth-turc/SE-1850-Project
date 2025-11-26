@@ -183,6 +183,11 @@ int main(){
             printf("Game over, loser.\n");
             break;
         }
+
+    }
+
+    for(int i = 0; i < NUM_FLOORS; i++){
+        freeFloor(levels[i]);
     }
 
     
