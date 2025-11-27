@@ -10,7 +10,7 @@ typedef struct {
 } monster;
 
 monster generateMonster(monster badGuy, int floorLevel);
-character printCombat(monster badGuy, character player);
+character printCombat(monster badGuy, character player, int floorLevel);
 int combatNumber(int combatBonus);
 character finalBoss(character player);
 

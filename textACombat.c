@@ -13,7 +13,7 @@ monster generateMonster(monster badGuy, int floorLevel){
 }
 
 //print and execute combat
-character printCombat(monster badGuy, character player){
+character printCombat(monster badGuy, character player,int floorLevel){
     printf("The monster snarls its sharp teeth at you...\n\n");
     int playerDamage;
     int monsterDamage;
@@ -67,7 +67,7 @@ character printCombat(monster badGuy, character player){
             scanf(" %c", &choice);
         }
         if (choice == 'y'){
-            player = monsterDrops(player,badGuy.health);
+            player = monsterDrops(player,floorLevel);
         } else {
             printf("You leave the monster.\n");
             printf("It looked too gross to touch anyway.\n");

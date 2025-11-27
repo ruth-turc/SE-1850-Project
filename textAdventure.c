@@ -42,7 +42,7 @@ int main(){
 
         printf("\ncurrent position: %d %d\n",player.row,player.col);
         printf("current HP: %d\n", player.health);
-        printf("current level: -%d\n",floorLevel);
+        printf("current level: -%d\n\n",floorLevel);
 
         if (floorLevel == NUM_FLOORS){
             finalBoss(player);
