@@ -13,5 +13,6 @@ monster generateMonster(monster badGuy, int floorLevel);
 character printCombat(monster badGuy, character player, int floorLevel);
 int combatNumber(int combatBonus);
 character finalBoss(character player);
+int runAway(character player);
 
 #endif

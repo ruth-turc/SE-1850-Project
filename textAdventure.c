@@ -160,7 +160,13 @@ int main(){
                     badGuy = generateMonster(badGuy, floorLevel);
                     player = printCombat(badGuy, player, floorLevel);
                 } else if (choice =='r'){
-                    printf("coward.\n\n");
+                    if (runAway(player)){
+                        printf("Coward...\n");
+                    } else {
+                        printf("You attempt to run away...but the monster is too fast.\n");
+                        badGuy = generateMonster(badGuy, floorLevel);
+                        player = printCombat(badGuy, player, floorLevel);
+                    }
                 }
                 break;
             case 'i': //item

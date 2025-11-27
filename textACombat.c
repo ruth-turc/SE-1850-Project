@@ -12,6 +12,20 @@ monster generateMonster(monster badGuy, int floorLevel){
     return badGuy;
 }
 
+/* determines wether or not the player can run away.
+    base percent of 75% plus player combat bonus*/
+int runAway(character player){
+    srand(time(NULL));
+    int runAway = (rand() % 100) + 1; // random Number between 1 - 100
+    runAway += player.combatBonus;
+
+    if (runAway >= 25){
+        return 0;
+    } else {
+        return 1;
+    }
+}
+
 //print and execute combat
 character printCombat(monster badGuy, character player,int floorLevel){
     printf("The monster snarls its sharp teeth at you...\n\n");
