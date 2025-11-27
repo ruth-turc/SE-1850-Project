@@ -127,7 +127,7 @@ int main(){
 
                 if (choice =='f'){
                     badGuy = generateMonster(badGuy, floorLevel);
-                    player = printCombat(badGuy, player);
+                    player = printCombat(badGuy, player, floorLevel);
                 } else if (choice =='r'){
                     printf("coward.\n\n");
                 }
