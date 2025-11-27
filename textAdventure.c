@@ -33,6 +33,33 @@ int main(){
 
     int floorLevel = 1;
     char choice;
+
+    printf("~~~ WELCOME TO TEXT ADVENTURE! ~~~\n\n");
+
+    printf("Would you like a toutorial?\n");
+    printf("[y]es or [n]o? --> ");
+    scanf(" %c", &choice);
+
+    while (choice != 'y' && choice != 'n'){
+        printf("Not an option!\n\n");
+        printf("[y]es or [n]o? --> ");
+        scanf(" %c", &choice);
+    }
+    if (choice == 'y'){
+        printf("\nText Adventure is a dungeon crawler type game.\n");
+        printf("To play, you will be tasked with finding your way to the bottom of the dungeon.\n");
+        printf("\nThe dungeon is littered with monsters, and they get stronger as the dungeon gets deeper.\n");
+        printf("In order to survive, you will want to pick up any item or gold you see, and ");
+        printf("loot any monster you have the chance.\n\n");
+
+        printf("Ready to play?\n");
+        printf("[y]es! --> ");
+        scanf(" %c", &choice);
+
+        printf("\n\n\n\n");
+    } else {
+        printf("\n\n\n\n");
+    }
     
     printf("You awaken in a dark cave...\n");
 
@@ -44,6 +71,7 @@ int main(){
         printf("current HP: %d\n", player.health);
         printf("current level: -%d\n\n",floorLevel);
 
+        //if player has reached the final floor, start boss fight
         if (floorLevel == NUM_FLOORS){
             finalBoss(player);
             break;
@@ -53,7 +81,7 @@ int main(){
         scanf(" %c", &choice);
 
         while(choice != 'w' && choice != 'a' && choice != 's' && choice != 'd'){
-            printf("Wrong Input!\n");
+            printf("Wrong Input!\n\n");
             printDirections(player.row, player.col,levels[floorLevel-1]);
             scanf(" %c", &choice);
         }
