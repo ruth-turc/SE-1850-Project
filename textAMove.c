@@ -26,7 +26,7 @@ void printDirections(int row, int col, map* floorStruct){
         printf("go south[s] ");
     }
     if (col > 0){
-        printf("go west[a]");
+        printf("go west[a] ");
     }
     if (row < 0 || row > max_row || col < 0 || col > max_col){
         printf("OUT OF BOUNDS\n");
