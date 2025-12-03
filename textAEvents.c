@@ -24,7 +24,7 @@ character itemPickUp(character player){
             break;
 
         case 2: //new armor
-            printf("Its a new peice of amor!\n");
+            printf("Its a new piece of armor!\n");
             printf("Max health +5\n");
             player.maxHealth += 5;
             break;
