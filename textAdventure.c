@@ -67,8 +67,8 @@ int main(){
     //game loop!
     while (player.health > 0){
 
-        printf("\ncurrent position: %d %d\n",player.row,player.col);
-        printf("current HP: %d\n", player.health);
+        //printf("\ncurrent position: %d %d\n",player.row,player.col);
+        printf("\ncurrent HP: %d\n", player.health);
         printf("current level: -%d\n\n",floorLevel);
 
         //if player has reached the final floor, start boss fight

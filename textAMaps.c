@@ -23,7 +23,7 @@ void initFloors(map* levels[]){
     char temp1[2][3] = {{' ','m','g'},
                        {' ',' ','d'}};
     fillFloor(levels,0,3,2,temp1);
-    printMap(levels[0]);
+    //printMap(levels[0]);
 
     levels[1] = createFloor(3,3);
     char temp2[3][3] = {{' ','i','d'},
@@ -31,7 +31,7 @@ void initFloors(map* levels[]){
                        {' ',' ','g'}};
 
     fillFloor(levels,1,3,3,temp2);
-    printMap(levels[1]);
+    //printMap(levels[1]);
 
     levels[2] = createFloor(5,4);
     char temp3[5][4] = {{' ','v','u','g'},
@@ -40,7 +40,7 @@ void initFloors(map* levels[]){
                        {' ',' ',' ','m'},
                        {'g',' ','d',' '}};
     fillFloor(levels,2,4,5,temp3);
-    printMap(levels[2]);
+    //printMap(levels[2]);
 
     //final floor
     levels[3] = createFloor(1,1);
