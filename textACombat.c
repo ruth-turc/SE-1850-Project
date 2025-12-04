@@ -102,7 +102,7 @@ int combatNumber(int combatBonus){
 
 /* prints and executes combat of the final boss, a dragon! */
 character finalBoss(character player){
-    monster dragon = generateMonster(dragon, 5);
+    monster dragon = generateMonster(dragon, 4);
     int playerDamage;
     int monsterDamage;
     char attack;

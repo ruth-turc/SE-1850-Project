@@ -102,12 +102,12 @@ character shop(character player, int floorLevel){
                 break;
         }
 
-        printf("Would you like to keep shoping?");
+        printf("Would you like to keep shoping?\n");
         printf("[y]es or [n]o --> ");
         scanf(" %c", &choice);
         while(choice != 'y' && choice != 'n'){
             printf("not one of the options!\n");
-            printf("[y]es please! or [n]o, I'm broke. --> ");
+            printf("[y]es or [n]o --> ");
             scanf(" %c", &choice);
         }
         if (choice == 'n'){
