@@ -1,8 +1,35 @@
-Text Adventure is a dungeon crawler and adventure game written in C. Users can type simply commands to explore a series of cave floors, fight monsters, and search for treasure. 
+## Text Adventure
+Text Adventure is a terminal-based dungeon crawler written in C where players explore a series of cave floors, battle monsters, and collect treasure using simple text commands.
 
-The maps or dungeon floors of Text Adventure are 2D arrays of chars that are stored as double pointers in a struct. Each char of the dungeon arrays either correspond to a certain event or indicate an empty space. The instances of each struct (each dungeon floor) is then stored in an array of struct pointers. 
+### Features:
+- Multi-floor dungeon exploration
+- Turn-based combat system
+- Randomized encounters and treasure
+- Command-driven player movement and actions
 
-The player character is also managed by a struct. Each of the fields in the character struct correspond to their combat ability, health, location in the dungeon, and their gold. 
+### Technical Highlights:
+- Dungeon floors implemented as 2D arrays of characters stored as double pointers within structs
+- Multiple dungon floors managed through an array of struct pointers
+- Player state managed by a struct containing combat ability, health, position, and inventory
+- Modular architechture with seperate files for movement, maps, events, and combat
 
-Code is separated by their purpose into multiple files: textAMove, textAMaps, textAEvents, textACombat, for clarity and better readability. Each file has a header and code files which are included in the main textAdventure file and compiled all together.
-To compile, we used the cygwin terminal with the command, "gcc textAdventure.c textAMaps.c textAMove.c textACombat.c textAEvents.c -o game" The game is then run with the command "./game"
+### Project Structure:
+- textAdventure - main game loop and initialization
+- textAMaps - map generation and storage
+- textAEvents - encounters and events
+- textAMove - handles character movement
+- textACombat - combat mechanics
+
+### Build and Run:
+
+This project was built using GCC in the Cygwin terminal.
+
+> gcc textAdventure.c textAMaps.c textAMove.c textACombat.c textAEvents.c -o game
+
+> ./game
+
+### What We Learned: 
+- Designing data-driven systems using structs and pointers
+- Utilizing dynamic memory in C
+- Organizing a C project with seperate files
+- Collaborating with a partner using GitHub
